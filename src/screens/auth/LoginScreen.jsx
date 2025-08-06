@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { BackgroundDecoration, Logo, WelcomeSection, InputField, PasswordInput, CustomButton } from '../../components';
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Handle login logic here
     console.log('Login pressed with:', { username, password });
+    navigation.replace('MainTabs');
   };
 
   const handleForgotPassword = () => {

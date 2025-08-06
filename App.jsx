@@ -7,7 +7,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 function App() {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="#A92323" barStyle="light-content" />
+      <StatusBar backgroundColor="#A92323" barStyle="dark-content" />
       <AppNavigator />
     </NavigationContainer>
   );

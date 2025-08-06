@@ -4,7 +4,7 @@ export { default as InputField } from './InputField';
 export { default as Logo } from './Logo';
 export { default as PasswordInput } from './PasswordInput';
 export { default as WelcomeSection } from './WelcomeSection';
-// export { default as TaskDonutChart } from './TaskDonutChart';
+export { default as CustomHeader } from './CustomHeader';
 // export { default as InfoRow } from './tasks/InfoRow';
 // export { default as ScheduleHeader } from './tasks/ScheduleHeader';
 // export { default as WorkOrderInfo } from './tasks/WorkOrderInfo';

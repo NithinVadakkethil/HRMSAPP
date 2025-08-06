@@ -31,10 +31,10 @@ const TabNavigator = () => {
 
           return icons[route.name];
         },
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.gray400,
+        tabBarActiveTintColor: "green",
+        tabBarInactiveTintColor: "green",
         tabBarStyle: {
-          backgroundColor: COLORS.white,
+          backgroundColor: "#fff",
           borderTopWidth: 0,
           elevation: 8,
           shadowOffset: { width: 0, height: -2 },
