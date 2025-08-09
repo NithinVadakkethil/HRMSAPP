@@ -6,3 +6,4 @@ export { default as Bell } from './icons/bell.svg';
 export { default as Search } from './icons/search.svg';
 export { default as Comment } from './icons/comment.svg';
 export { default as BrandLogo } from './icons/brandlogo.svg';
+export { default as SplashImage } from './images/splash.svg';

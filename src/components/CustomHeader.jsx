@@ -41,7 +41,7 @@ const CustomHeader = ({
               {/* <Icon name={ICONS.BACK} size={24} color="white" /> */}
             </TouchableOpacity>}
         </View>
-        <Text className="text-[#22012F] text-xl font-semibold">{title}</Text>
+        <Text className="text-[#22012F] text-xl font-inter-bold">{title}</Text>
         <View className="flex-row items-center">
         <TouchableOpacity
               className="p-1"

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { SplashImage } from "../../assets";
 
 const SplashScreen = () => {
   const navigation = useNavigation();
@@ -14,17 +15,9 @@ const SplashScreen = () => {
   }, [navigation]);
 
   return (
-    <View className="flex-1 bg-primary justify-center items-center">
-      <View className="items-center px-8">
-        <Text className="text-white text-3xl font-bold mb-2">
-          AITS Safty LLC
-        </Text>
-        <Text className="text-white/80 text-base mb-6">UAE</Text>
-        <Text className="text-white/70 text-sm text-center leading-5">
-          Monitor services, track issues, and access reports instantly.
-        </Text>
-      </View>
-    </View>
+    <SafeAreaView className="flex-1 bg-[#023247]">
+      <SplashImage width="100%" height="100%"/>
+    </SafeAreaView>
   );
 };
 

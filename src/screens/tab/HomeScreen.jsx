@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { CustomHeader } from '../../components'
+import { CustomHeader, LeaveStats } from '../../components'
 
 const HomeScreen = () => {
   return (
@@ -10,7 +10,7 @@ const HomeScreen = () => {
         showNotificationButton={true}
         showBackButton={true}
       />
-      <Text>HomeScreen</Text>
+      <LeaveStats/>
     </View>
   )
 }

@@ -5,7 +5,7 @@ export { default as Logo } from './Logo';
 export { default as PasswordInput } from './PasswordInput';
 export { default as WelcomeSection } from './WelcomeSection';
 export { default as CustomHeader } from './CustomHeader';
-// export { default as InfoRow } from './tasks/InfoRow';
+export { default as LeaveStats } from './Home/LeaveStats';
 // export { default as ScheduleHeader } from './tasks/ScheduleHeader';
 // export { default as WorkOrderInfo } from './tasks/WorkOrderInfo';
 // export { default as ClientSiteInfo } from './tasks/ClientSiteInfo';
