@@ -1,16 +1,28 @@
-import { View, Text } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import React from 'react'
-import { CustomHeader, LeaveStats } from '../../components'
+import { CustomHeader, LeaveStats, SummarySection, UpcomingEvents, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard } from '../../components'
 
 const HomeScreen = () => {
   return (
     <View className="flex-1 bg-gray-100">
-        <CustomHeader 
+      <CustomHeader
         title="Dashboard"
         showNotificationButton={true}
         showBackButton={true}
       />
-      <LeaveStats/>
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        <LeaveStats />
+        <SummarySection />
+        <Attendance />
+        <Calendar />
+        <UpcomingEvents />
+        <UpcomingHolidays />
+        <PerformanceDashboard />
+      </ScrollView>
     </View>
   )
 }
