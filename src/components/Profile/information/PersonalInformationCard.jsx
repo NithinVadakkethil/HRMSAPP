@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import ProfileHeader from './ProfileHeader';
 import ProfileSection from './ProfileSection';
-import DetailsSection from '../../DetailsSection';
+import DetailsSection from '../../Common/DetailsSection';
 
 const PersonalInformationCard = () => {
   return (
     <View className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
       <ProfileHeader />
-      <ProfileSection />
+      <ProfileSection subDetails={true}/>
       <DetailsSection
         title="Contact Details"
         details={[

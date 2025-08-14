@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, Text } from 'react-native';
 import StatusChip from './StatusChip';
 
-const ProfileSection = () => {
+const ProfileSection = (props) => {
   return (
     <View className="flex-row mb-4 border-b border-gray-200 pb-4">
       <Image
@@ -18,8 +18,10 @@ const ProfileSection = () => {
           <StatusChip text="SWA2345" />
         </View>
         <Text className="text-gray-600 text-sm mb-1">Sales Executive | Calicut</Text>
-        <Text className="text-gray-500 text-xs mb-1">ESSL ID: E98765</Text>
-        <Text className="text-gray-500 text-xs">Joining Date : 23, Aug, 2024</Text>
+        {props.subDetails && <>
+          <Text className="text-gray-500 text-xs mb-1">ESSL ID: E98765</Text>
+          <Text className="text-gray-500 text-xs">Joining Date : 23, Aug, 2024</Text>
+        </>}
       </View>
     </View>
   );

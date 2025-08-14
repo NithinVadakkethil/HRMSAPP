@@ -12,7 +12,7 @@ export { default as Unread } from './inbox/Unread';
 export { default as Urchieved } from './inbox/Urchieved';
 export { default as Access } from './profile/Access';
 export { default as Assets } from './profile/Assets';
-export { default as Attendance} from './profile/Attendance';
+export { default as Attendance} from './profile/AttendanceScreen';
 export { default as ContactMade} from './profile/ContactMade';
 export { default as Document} from './profile/Document';
 export { default as Offboard} from './profile/Offboard';

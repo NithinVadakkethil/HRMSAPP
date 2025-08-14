@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import HeaderText from '../../HeaderText';
+import HeaderText from '../../Common/HeaderText';
 import MetricSeparator from './MetricSeparator';
 
 const SummarySection = () => {
   return (
     <View className="p-4">
-      <HeaderText />
+      <HeaderText text={"Summary"}/>
       <View className='flex-row items-center justify-between'>
         <View className='bg-[#FFF] p-4 rounded-lg shadow-sm shadow-black/10'>
           <Text className="text-lg font-semibold text-gray-900 mb-1">

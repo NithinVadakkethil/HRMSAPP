@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import DetailsSection from '../../DetailsSection'
+import DetailsSection from '../../Common/DetailsSection'
 
 const BankDetailsCard = () => {
     return (
