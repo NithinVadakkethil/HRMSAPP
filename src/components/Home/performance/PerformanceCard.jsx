@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const PerformanceCard = ({ title, iconColor = '#3B82F6' }) => {
   return (
-    <View className="flex-row items-center space-x-3 p-3">
+    <View className="flex-row items-center gap-3 space-x-3 p-3">
       <View
         className="w-3 h-3 rounded-full"
         style={{ backgroundColor: iconColor }}

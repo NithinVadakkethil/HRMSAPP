@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 
-const CalendarHeader = () => {
+const CalendarHeader = (props) => {
   return (
     <View className="mb-6">
       {/* Calendar title */}
@@ -35,7 +35,7 @@ const CalendarHeader = () => {
           </View>
         </View>
 
-        <TouchableOpacity className="bg-blue-600 px-4 py-2 rounded-lg">
+        <TouchableOpacity className="bg-blue-600 px-4 py-2 rounded-lg" onPress={props.onRequestLeave}>
           <Text className="text-white font-medium">Request Leave</Text>
         </TouchableOpacity>
       </View>

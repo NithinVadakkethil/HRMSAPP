@@ -22,6 +22,9 @@ const CustomHeader = ({
   const handleNotificationPress = () => {
     navigation.navigate('Notification');
   };
+  const handleCommentPress = () => {
+    navigation.navigate('Inbox');
+  };
 
   return (
     <>
@@ -45,14 +48,14 @@ const CustomHeader = ({
         <View className="flex-row items-center">
         <TouchableOpacity
               className="p-1"
-              onPress={handleNotificationPress}
+              // onPress={handleNotificationPress}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
               <Search/>
             </TouchableOpacity>
         <TouchableOpacity
               className="p-1"
-              onPress={handleNotificationPress}
+              onPress={handleCommentPress}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
               <Comment/>

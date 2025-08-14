@@ -5,6 +5,8 @@ import {
   LeaveScreen,
   ReportScreen,
   ProfileScreen,
+  NotificationScreen,
+  InboxScreen
 } from "../screens";
 // import { ICONS, COLORS } from "../constants";
 import { Home, Leave, Report, Profile } from "../assets";
@@ -55,6 +57,8 @@ const TabNavigator = () => {
       <Tab.Screen name="Leave" component={LeaveScreen} />
       <Tab.Screen name="Report" component={ReportScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Notification" component={NotificationScreen} options={{ tabBarButton: () => null, tabBarItemStyle: {display: 'none'} }} />
+      <Tab.Screen name="Inbox" component={InboxScreen} options={{ tabBarButton: () => null, tabBarItemStyle: {display: 'none'} }} />
     </Tab.Navigator>
   );
 };
