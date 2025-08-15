@@ -21,5 +21,7 @@ export { default as KYCDocuments } from './Profile/kycDocuments/KYCDocuments';
 export { default as ExperienceDetails } from './Profile/experience/ExperienceDetails';
 export { default as DetailsSection } from './Common/DetailsSection';
 export { default as BankDetailsCard } from './Profile/bankDetails/BankDetailsCard';
+export { default as EducationQualification } from './Profile/education/EducationQualification';
+export { default as Credentials } from './Profile/credentials/Credentials';
 export { default as ProfileSection } from './Profile/information/ProfileSection';
 export { default as Payslip } from './PaySlip/Payslip';

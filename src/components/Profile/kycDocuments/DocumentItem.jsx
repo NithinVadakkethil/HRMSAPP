@@ -3,18 +3,19 @@ import { View, Image, Text } from 'react-native';
 
 const DocumentItem = ({ title, imageUri, numberLabel, numberValue }) => {
   return (
-    <View className="flex-row items-center gap-28 mb-6">
-      <View className="flex-row items-center space-x-4">
-        <View>
-          <Text className="text-lg font-medium text-gray-800">{title}</Text>
-          <Image
-            source={{ uri: imageUri }}
-            className="w-20 h-20 rounded-lg"
-            resizeMode="contain"
-          />
-        </View>
+    <View className="flex-row justify-between items-center mb-4">
+      {/* Left side: Title and Image */}
+      <View>
+        <Text className="text-base font-medium text-gray-800 mb-2">{title}</Text>
+        <Image
+          source={{ uri: imageUri }}
+          className="w-24 h-16 rounded-lg"
+          resizeMode="cover"
+        />
       </View>
-      <View className="text-right">
+      
+      {/* Right side: Number and Label */}
+      <View className="items-end">
         <Text className="text-sm text-gray-600 mb-1">{numberLabel}</Text>
         <Text className="text-base font-semibold text-gray-900">{numberValue}</Text>
       </View>

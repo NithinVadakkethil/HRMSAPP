@@ -1,6 +1,6 @@
 import { View, ScrollView } from 'react-native'
 import React from 'react'
-import { PersonalInformationCard, KYCDocuments, ExperienceDetails, BankDetailsCard } from '../../components'
+import { PersonalInformationCard, KYCDocuments, ExperienceDetails, BankDetailsCard, EducationQualification, Credentials } from '../../components'
 
 const Personal = () => {
   return (
@@ -13,6 +13,8 @@ const Personal = () => {
       <KYCDocuments/>
       <ExperienceDetails/>
       <BankDetailsCard/>
+      <EducationQualification/>
+      <Credentials/>
     </ScrollView>
   )
 }

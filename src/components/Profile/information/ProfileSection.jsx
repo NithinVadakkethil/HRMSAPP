@@ -4,7 +4,7 @@ import StatusChip from './StatusChip';
 
 const ProfileSection = (props) => {
   return (
-    <View className="flex-row mb-4 border-b border-gray-200 pb-4">
+    <View className="flex-row mb-4">
       <Image
         source={{
           uri: "https://api.builder.io/api/v1/image/assets/05f15ed087014a6a9f74a6d6a78953d9/79044714e8589bce87b864dcecf6105185d93d4c?placeholderIfAbsent=true",

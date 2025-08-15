@@ -22,10 +22,8 @@ const ExperienceDetails = () => {
   ];
 
   return (
-    <View className="p-4">
-      <View className="mb-6">
-        <Text className="text-lg font-semibold text-black">Experience Details</Text>
-      </View>
+    <View className="bg-white p-4 shadow-sm border border-gray-200 mt-4">
+      <Text className="text-base font-bold text-gray-900 mb-4">Experience Details</Text>
       <View>
         {experiences.map((experience, index) => (
           <ExperienceItem

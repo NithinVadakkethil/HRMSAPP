@@ -25,11 +25,9 @@ const KYCDocuments = () => {
   ];
 
   return (
-    <View className="p-6 bg-white">
-      <View className="mb-8">
-        <Text className="text-2xl font-bold text-gray-900">KYC Documents</Text>
-      </View>
-      <View className="space-y-6">
+    <View className="bg-white p-4 shadow-sm border border-gray-200 mt-4">
+      <Text className="text-base font-bold text-gray-900 mb-4">KYC Documents</Text>
+      <View className="space-y-4">
         {documents.map((document, index) => (
           <DocumentItem
             key={index}
