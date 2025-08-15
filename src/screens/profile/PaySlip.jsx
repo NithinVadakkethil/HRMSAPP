@@ -1,11 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { Payslip } from '../../components'
 
 const PaySlip = () => {
   return (
-    <View>
-      <Text>PaySlip</Text>
-    </View>
+    <Payslip/>
   )
 }
 

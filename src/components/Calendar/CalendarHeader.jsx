@@ -4,11 +4,6 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 const CalendarHeader = (props) => {
   return (
     <View className="mb-6">
-      {/* Calendar title */}
-      <View className="mb-4">
-        <Text className="text-lg font-semibold text-gray-900">Calendar</Text>
-      </View>
-
       {/* Month navigation and Request Leave button */}
       <View className="flex-row justify-between items-center mb-4">
         <View className="flex-row items-center">

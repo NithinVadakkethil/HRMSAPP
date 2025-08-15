@@ -82,22 +82,6 @@ const Attendance = () => {
           header: 'Check Out',
           key: 'checkOut',
           width: 80,
-        },
-        {
-          header: 'Worked',
-          key: 'worked',
-          width: 80,
-        },
-        {
-          header: 'Difference',
-          key: 'difference',
-          width: 80,
-        },
-        {
-          header: 'Status',
-          key: 'status',
-          width: 100,
-          render: (row) => <StatusBadge status={row.status} />
         }
       ];
     
@@ -107,7 +91,7 @@ const Attendance = () => {
       };
     
       return (
-        <View className="flex-1 bg-gray-100">
+        <View className="flex-1 bg-[#FFFFFF]">
           <CustomTable
             title="Attendance Overview"
             columns={columns}

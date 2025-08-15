@@ -9,10 +9,13 @@ const CustomTable = ({
     onRowPress = null
 }) => {
     return (
-        <View className={`bg-white rounded-lg shadow-sm border border-gray-200 mx-4 my-2 ${containerStyle}`}>
+        <View className={`bg-white rounded-lg shadow-sm border border-gray-200 my-2 ${containerStyle}`}>
             {/* Table Header */}
-            <View className="px-6 py-4 border-b border-gray-200">
-                <Text className="text-xl font-semibold text-gray-900">{title}</Text>
+            <View className="px-6 py-4 border-b border-gray-200 flex-row justify-between items-center">
+                <Text className="text-base font-bold text-gray-900">{title}</Text>
+                <TouchableOpacity>
+                    <Text className="text-sm font-medium text-blue-600">See all</Text>
+                </TouchableOpacity>
             </View>
 
             {/* Scrollable Table Container */}

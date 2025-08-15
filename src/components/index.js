@@ -9,6 +9,7 @@ export { default as HeaderText } from './Common/HeaderText';
 export { default as LeaveStats } from './Home/LeaveStats';
 export { default as SummarySection } from './Home/summary/SummarySection';
 export { default as UpcomingEvents } from './Home/events/UpcomingEvents';
+export { default as UpcomingAnniversary } from './Home/events/UpcomingAnniversary';
 export { default as UpcomingHolidays } from './Home/holiday/UpcomingHolidays';
 export { default as Attendance } from './Home/attendance/Attendance';
 export { default as Calendar } from './Calendar/Calendar';
@@ -21,3 +22,4 @@ export { default as ExperienceDetails } from './Profile/experience/ExperienceDet
 export { default as DetailsSection } from './Common/DetailsSection';
 export { default as BankDetailsCard } from './Profile/bankDetails/BankDetailsCard';
 export { default as ProfileSection } from './Profile/information/ProfileSection';
+export { default as Payslip } from './PaySlip/Payslip';

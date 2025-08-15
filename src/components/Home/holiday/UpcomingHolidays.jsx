@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import HolidayLegend from './HolidayLegend';
 import HolidayColumn from './HolidayColumn';
 
 const UpcomingHolidays = () => {
@@ -47,13 +46,12 @@ const UpcomingHolidays = () => {
   ];
 
   return (
-    <View className="bg-white p-6 rounded-lg shadow-sm">
-      <View className="mb-6">
-        <Text className="text-xl font-semibold text-gray-800 mb-4">
-          Upcoming Holidays
-        </Text>
-        <HolidayLegend />
-        <View className="h-px bg-gray-200 mb-6" />
+    <View className="bg-[#FFF] rounded-lg shadow-sm border border-gray-200 mt-4 p-4">
+      <View className="mb-4">
+        <View className="flex-row justify-between items-center">
+          <Text className="text-base font-bold text-gray-900">Upcoming holiday</Text>
+          <Text className="text-sm font-medium text-gray-500">Restricted Holiday</Text>
+        </View>
       </View>
 
       <View className="flex-row">

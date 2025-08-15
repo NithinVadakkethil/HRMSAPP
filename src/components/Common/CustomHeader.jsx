@@ -29,12 +29,12 @@ const CustomHeader = ({
   return (
     <>
       {/* Safe area to avoid notch overlap */}
-      <SafeAreaView edges={['top']} style={{ backgroundColor: '#FFFFFF' }}>
-        <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
+      <SafeAreaView edges={['top']} style={{ backgroundColor: '#F9F9F9' }}>
+        <StatusBar backgroundColor="#F9F9F9" barStyle="dark-content" />
       </SafeAreaView>
 
       {/* Actual Header */}
-      <View className="flex-row items-center justify-between px-4 py-3 min-h-[56px] bg-[#FFFFFF]">
+      <View className="flex-row items-center justify-between px-4 py-3 min-h-[56px] bg-[#F9F9F9]">
         <View className="flex-row items-center">
             {logo ? <BrandLogo  /> :  <TouchableOpacity
               className="mr-4 p-1"
