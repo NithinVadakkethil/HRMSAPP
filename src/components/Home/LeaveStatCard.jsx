@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const LeaveStatCard = ({ IconComponent, label, value }) => {
   return (
-    <View className="flex-1 bg-white rounded-lg p-4 m-2 shadow-sm items-start">
+    <View className="flex-1 bg-white rounded-lg p-4 shadow-sm items-start">
       <View className="mb-2">
         <IconComponent width={24} height={24} />
       </View>

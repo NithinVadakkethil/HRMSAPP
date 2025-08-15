@@ -1,6 +1,6 @@
 import { View, ScrollView } from 'react-native'
 import React, {useState} from 'react'
-import { CustomHeader, LeaveStats, SummarySection, UpcomingEvents, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal } from '../../components'
+import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary } from '../../components'
 
 const HomeScreen = () => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
@@ -11,11 +11,6 @@ const HomeScreen = () => {
   };
   return (
     <View className="flex-1 bg-gray-100">
-      <CustomHeader
-        title="Dashboard"
-        showNotificationButton={true}
-        showBackButton={true}
-      />
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -26,7 +21,7 @@ const HomeScreen = () => {
         <Attendance />
         <Calendar onRequestLeave={() => setShowLeaveModal(true)}/>
         <PerformanceDashboard />
-        <UpcomingEvents />
+        <UpcomingAnniversary />
         <UpcomingHolidays />
       </ScrollView>
       <LeaveRequestModal

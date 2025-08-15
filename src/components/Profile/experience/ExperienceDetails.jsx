@@ -13,19 +13,12 @@ const ExperienceDetails = () => {
       company: "Atlas Jewllery",
       position: "Exicutive Manager",
       dateRange: "2012 - 2014"
-    },
-    {
-      company: "Bachelor of Business Administration",
-      position: "Indira Gandhi National Open University",
-      dateRange: "2017 -2020"
     }
   ];
 
   return (
-    <View className="p-4">
-      <View className="mb-6">
-        <Text className="text-lg font-semibold text-black">Experience Details</Text>
-      </View>
+    <View className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 m-4">
+      <Text className="text-base font-bold text-gray-900 mb-4">Experience Details</Text>
       <View>
         {experiences.map((experience, index) => (
           <ExperienceItem
