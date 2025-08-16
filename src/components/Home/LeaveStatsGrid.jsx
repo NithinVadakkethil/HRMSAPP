@@ -44,7 +44,7 @@ const LeaveStatsGrid = () => {
   ];
 
   const renderRow = (startIndex, endIndex) => (
-    <View className="flex-row space-x-4 gap-2" key={`row-${startIndex}`}>
+    <View className="flex-row space-x-4 gap-3" key={`row-${startIndex}`}>
       {leaveData.slice(startIndex, endIndex).map((item) => (
         <LeaveStatCard
           key={item.id}
@@ -57,7 +57,7 @@ const LeaveStatsGrid = () => {
   );
 
   return (
-    <View className="space-y-4 gap-2">
+    <View className="space-y-4 gap-3">
       {renderRow(0, 3)}
       {renderRow(3, 6)}
     </View>

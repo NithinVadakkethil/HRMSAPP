@@ -25,3 +25,13 @@ export { default as EducationQualification } from './Profile/education/Education
 export { default as Credentials } from './Profile/credentials/Credentials';
 export { default as ProfileSection } from './Profile/information/ProfileSection';
 export { default as Payslip } from './PaySlip/Payslip';
+export { default as PayslipFooter } from './PaySlip/PayslipFooter';
+export { default as PayslipTable } from './PaySlip/PayslipTable';
+export { default as PayslipSection } from './PaySlip/PayslipSection';
+export { default as DocumentViewer } from './Document/DocumentViewer';
+export { default as DocumentRow } from './Document/DocumentRow';
+export { default as PayslipHeader } from './PaySlip/PayslipHeader';
+export { default as OnboardingChecklist } from './Common/OnboardingChecklist';
+export { default as ChecklistItem } from './Common/ChecklistItem';
+export { default as Checkmark } from './Common/Checkmark';
+
