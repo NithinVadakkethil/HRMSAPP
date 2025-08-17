@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import HolidayColumn from './HolidayColumn';
+import HeaderText from '../../Common/HeaderText';
 
 const UpcomingHolidays = () => {
   const leftColumnHolidays = [
@@ -46,11 +47,12 @@ const UpcomingHolidays = () => {
   ];
 
   return (
-    <View className="bg-[#FFF] rounded-lg shadow-sm border border-gray-200 mt-4 p-4">
+    <View className="bg-[#FFF] shadow-sm mt-4 p-4">
+      <HeaderText text={"Upcoming Holidays"}/>
       <View className="mb-4">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-base font-bold text-gray-900">Upcoming holiday</Text>
-          <Text className="text-sm font-medium text-gray-500">Restricted Holiday</Text>
+        <View className="flex-row items-center gap-5 border-b pb-2 border-[#EBEFF3]">
+          <Text className="text-[14px] font-inter-semibold text-[#393B4C]">Public holiday</Text>
+          <Text className="text-[14px] font-inter-semibold text-[#696F82]">Restricted holiday</Text>
         </View>
       </View>
 

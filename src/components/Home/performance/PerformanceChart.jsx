@@ -7,28 +7,38 @@ const PerformanceChart = () => {
   const data = [
     {
       key: 1,
-      value: performanceValue,
-      svg: { fill: '#10B981' }, // Green color for the main value
+      value: 30,
+      svg: { fill: '#FE7E4A' }, // Green color for the main value
     },
     {
       key: 2,
-      value: 100 - performanceValue,
-      svg: { fill: '#E5E7EB' }, // Gray color for the remainder
+      value: 20,
+      svg: { fill: '#08F6C9' }, // Gray color for the remainder
+    },
+    {
+      key: 3,
+      value: 10,
+      svg: { fill: '#F43F5E' }, // Green color for the main value
+    },
+    {
+      key: 4,
+      value: 40,
+      svg: { fill: '#0055F3' }, // Gray color for the remainder
     },
   ];
 
   return (
     <View className="items-center justify-center">
       <PieChart
-        style={{ height: 150, width: 150 }}
+        style={{ height: 160, width: 160 }}
         data={data}
         innerRadius="70%"
         outerRadius="95%"
         padAngle={0}
       >
         <View className="absolute inset-0 items-center justify-center">
-          <Text className="text-3xl font-bold text-gray-800">{`${performanceValue}%`}</Text>
-          <Text className="text-sm text-gray-500">Excellent</Text>
+          <Text className="text-sm text-gray-500">Performance</Text>
+          <Text className="text-base font-inter-bold text-[#111827]">Excelent</Text>
         </View>
       </PieChart>
     </View>

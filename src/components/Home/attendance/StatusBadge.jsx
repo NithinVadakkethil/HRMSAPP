@@ -31,7 +31,7 @@ const StatusBadge = ({ status }) => {
 
     return (
         <View className={`px-2.5 py-1 rounded-full ${getStatusStyles(status)}`}>
-            <Text className={`text-xs font-medium ${getTextStyles(status)}`}>
+            <Text className={`text-xs font-medium text-center ${getTextStyles(status)}`}>
                 {status}
             </Text>
         </View>

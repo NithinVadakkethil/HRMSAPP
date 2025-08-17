@@ -71,18 +71,34 @@ const Attendance = () => {
         {
           header: 'Date',
           key: 'date',
-          width: 150,
+          width: 160,
         },
         {
           header: 'Check In',
           key: 'checkIn',
-          width: 80,
+          width: 90,
         },
         {
           header: 'Check Out',
           key: 'checkOut',
+          width: 90,
+        },
+        {
+          header: 'Worked',
+          key: 'worked',
+          width: 100,
+        },
+        {
+          header: 'Difference',
+          key: 'difference',
+          width: 100,
+        },
+        {
+          header: 'Status',
+          key: 'status',
           width: 80,
-        }
+          render: (row) => <StatusBadge status={row.status} />,
+        },
       ];
     
       const handleRowPress = (row) => {
@@ -91,13 +107,13 @@ const Attendance = () => {
       };
     
       return (
-        <View className="flex-1 bg-[#FFFFFF]">
+        <View className="flex-1 px-4 bg-[#FFFFFF] rounded-lg mb-4">
           <CustomTable
             title="Attendance Overview"
             columns={columns}
             data={attendanceData}
             onRowPress={handleRowPress}
-            containerStyle="mt-4"
+            // containerStyle="mt-4"
           />
           
           {/* Example with different data - Employee Performance */}

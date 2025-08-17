@@ -19,7 +19,7 @@ const EventItem = ({ imageUri, name, eventType, yearsInfo }) => {
       </View>
       {yearsInfo && (
         <View className="ml-2">
-          <Text className="text-sm text-gray-500 font-medium">
+          <Text className="text-sm text-[#111827] font-inter-semibold">
             {yearsInfo}
           </Text>
         </View>

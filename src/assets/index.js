@@ -13,3 +13,5 @@ export { default as SickLeave } from './icons/sick.svg';
 export { default as Unpaid } from './icons/unpaid.svg';
 export { default as Balance } from './icons/balance.svg';
 export { default as Casual } from './icons/casual.svg';
+export { default as LeftArrow } from './icons/leftarrow.svg';
+export { default as RightArrow } from './icons/rightarrow.svg';

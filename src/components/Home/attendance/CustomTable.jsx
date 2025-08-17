@@ -9,25 +9,22 @@ const CustomTable = ({
     onRowPress = null
 }) => {
     return (
-        <View className={`bg-white rounded-lg shadow-sm border border-gray-200 my-2 ${containerStyle}`}>
+        <View className={`${containerStyle}`}>
             {/* Table Header */}
-            <View className="px-6 py-4 border-b border-gray-200 flex-row justify-between items-center">
+            <View className="py-4 flex-row justify-between items-center">
                 <Text className="text-base font-bold text-gray-900">{title}</Text>
-                <TouchableOpacity>
-                    <Text className="text-sm font-medium text-blue-600">See all</Text>
-                </TouchableOpacity>
             </View>
 
             {/* Scrollable Table Container */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View>
                     {/* Table Headers */}
-                    <View className="bg-gray-50 flex-row">
+                    <View className="flex-row rounded-t-[2px] border border-[#E2E4E9] bg-[#F6F8FA]">
                         {columns.map((column, index) => (
                             <View
                                 key={index}
-                                className="px-6 py-3 justify-center"
-                                style={{ minWidth: column.width || 120 }}
+                                className="px-3 py-3 justify-center border-r border-[#E2E4E9] last:border-r-0"
+                                style={{ width: column.width || 120 }}
                             >
                                 <Text className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {column.header}
@@ -37,20 +34,19 @@ const CustomTable = ({
                     </View>
 
                     {/* Table Body */}
-                    <View>
+                    <View className="">
                         {data.map((row, rowIndex) => (
                             <TouchableOpacity
                                 key={rowIndex}
                                 onPress={() => onRowPress && onRowPress(row)}
                                 activeOpacity={onRowPress ? 0.7 : 1}
-                                className="bg-white border-b border-gray-200"
                             >
-                                <View className="flex-row">
+                                <View className="flex-row bg-[#FFF] border-b border-[#E2E4E9]">
                                     {columns.map((column, colIndex) => (
                                         <View
                                             key={colIndex}
-                                            className="px-6 py-4 justify-center"
-                                            style={{ minWidth: column.width || 120 }}
+                                            className="px-3 py-4 justify-center border-r border-[#E2E4E9] last:border-r-0"
+                                            style={{ width: column.width || 120 }}
                                         >
                                             {column.render ? (
                                                 column.render(row)

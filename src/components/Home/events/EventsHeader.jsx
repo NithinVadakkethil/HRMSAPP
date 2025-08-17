@@ -8,9 +8,11 @@ const EventsHeader = ({ title = "Upcoming Birthday / anniversary", onSeeAllPress
         {title}
       </Text>
       <TouchableOpacity onPress={onSeeAllPress}>
-        <Text className="text-sm text-blue-600 font-medium">
-          See all
-        </Text>
+        <View className="pb-1">
+          <Text className="text-sm text-[#2A8E9E] font-inter-medium border-b border-[#2A8E9E]">
+            See all
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
   );

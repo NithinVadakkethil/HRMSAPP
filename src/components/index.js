@@ -24,7 +24,6 @@ export { default as BankDetailsCard } from './Profile/bankDetails/BankDetailsCar
 export { default as EducationQualification } from './Profile/education/EducationQualification';
 export { default as Credentials } from './Profile/credentials/Credentials';
 export { default as ProfileSection } from './Profile/information/ProfileSection';
-export { default as Payslip } from './PaySlip/Payslip';
 export { default as PayslipFooter } from './PaySlip/PayslipFooter';
 export { default as PayslipTable } from './PaySlip/PayslipTable';
 export { default as PayslipSection } from './PaySlip/PayslipSection';

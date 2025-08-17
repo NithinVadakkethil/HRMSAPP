@@ -5,10 +5,10 @@ import PerformanceChart from './PerformanceChart';
 
 const PerformanceDashboard = () => {
     const metricsData = [
-        { title: 'Time Keeping', iconColor: '#10B981' },
-        { title: 'Shortage', iconColor: '#EF4444' },
-        { title: 'Leave', iconColor: '#F59E0B' },
-        { title: 'Overtime', iconColor: '#8B5CF6' }
+        { title: 'Time Keeping', iconColor: '#0055F3' },
+        { title: 'Shortage', iconColor: '#FE7E4A' },
+        { title: 'Leave', iconColor: '#F43F5E' },
+        { title: 'Overtime', iconColor: '#08F6C9' }
     ];
 
     return (
