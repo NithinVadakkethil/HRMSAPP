@@ -5,9 +5,7 @@ import { OnboardingChecklist, ProfileSection } from '../../components'
 const Offboard = () => {
   return (
     <>
-      <View className='px-4 pt-4'>
-        <ProfileSection subDetails={false} />
-      </View>
+      <ProfileSection subDetails={false} />
       <OnboardingChecklist title={"Offboarding"}/>
     </>
   )

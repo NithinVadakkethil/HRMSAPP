@@ -33,4 +33,6 @@ export { default as PayslipHeader } from './PaySlip/PayslipHeader';
 export { default as OnboardingChecklist } from './Common/OnboardingChecklist';
 export { default as ChecklistItem } from './Common/ChecklistItem';
 export { default as Checkmark } from './Common/Checkmark';
+export { default as CustomTable } from './Home/attendance/CustomTable';
+export { default as StatusBadge } from './Home/attendance/StatusBadge';
 

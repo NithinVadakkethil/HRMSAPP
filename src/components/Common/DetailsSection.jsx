@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const DetailsSection = ({ title, details }) => {
   return (
-    <View>
+    <View className='p-4'>
       <Text className="text-lg font-bold mb-4">{title}</Text>
       {details.map((item, index) => (
         <View key={index} className="flex-row mb-3">

@@ -5,7 +5,7 @@ import DetailsSection from '../../Common/DetailsSection';
 
 const PersonalInformationCard = () => {
   return (
-    <View className="bg-white p-4 shadow-sm border border-gray-200 ">
+    <View className="bg-white shadow-sm border border-gray-200 ">
       <ProfileSection subDetails={true}/>
       <DetailsSection
         details={[

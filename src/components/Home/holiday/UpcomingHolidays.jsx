@@ -47,16 +47,16 @@ const UpcomingHolidays = () => {
   ];
 
   return (
-    <View className="bg-[#FFF] shadow-sm mt-4 p-4">
+    <View className="bg-[#FFF] shadow-sm mt-4">
       <HeaderText text={"Upcoming Holidays"}/>
-      <View className="mb-4">
+      <View className="mx-4">
         <View className="flex-row items-center gap-5 border-b pb-2 border-[#EBEFF3]">
-          <Text className="text-[14px] font-inter-semibold text-[#393B4C]">Public holiday</Text>
-          <Text className="text-[14px] font-inter-semibold text-[#696F82]">Restricted holiday</Text>
+          <Text className="text-[14px] font-inter-medium text-[#393B4C]">Public holiday</Text>
+          <Text className="text-[14px] font-inter-medium text-[#696F82]">Restricted holiday</Text>
         </View>
       </View>
 
-      <View className="flex-row">
+      <View className="flex-row m-4">
         <HolidayColumn holidays={leftColumnHolidays} />
         <HolidayColumn holidays={rightColumnHolidays} />
       </View>

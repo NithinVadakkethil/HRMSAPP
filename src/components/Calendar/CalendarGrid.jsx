@@ -55,7 +55,7 @@ const CalendarGrid = ({ currentDate, selectedDate, onDateSelect }) => {
   const weeks = generateCalendarData();
 
   return (
-    <View className="">
+    <View className="px-4">
       {/* Day headers */}
       <View className="flex-row">
         {dayHeaders.map((day, index) => (

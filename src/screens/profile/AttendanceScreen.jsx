@@ -9,10 +9,8 @@ const AttendanceScreen = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      <View className='px-4 pt-4'>
-        <ProfileSection subDetails={false} />
-        <HeaderText text={"29 July 2024"} />
-      </View>
+      <ProfileSection subDetails={false} />
+      <HeaderText text={"29 July 2024"} />
       <LeaveStats />
       <SummarySection />
       <Attendance />

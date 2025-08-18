@@ -9,7 +9,7 @@ const CustomTable = ({
     onRowPress = null
 }) => {
     return (
-        <View className={`${containerStyle}`}>
+        <View className={`${containerStyle} mx-4`}>
             {/* Table Header */}
             <View className="py-4 flex-row justify-between items-center">
                 <Text className="text-base font-bold text-gray-900">{title}</Text>

@@ -107,7 +107,7 @@ const Attendance = () => {
       };
     
       return (
-        <View className="flex-1 px-4 bg-[#FFFFFF] rounded-lg mb-4">
+        <View className="flex-1 bg-[#FFFFFF] rounded-lg mb-4">
           <CustomTable
             title="Attendance Overview"
             columns={columns}

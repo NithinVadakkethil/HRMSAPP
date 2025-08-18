@@ -19,7 +19,7 @@ const Calendar = (props) => {
   };
 
   return (
-    <View className="bg-[#FFF] rounded-lg shadow-sm border border-gray-200 p-4">
+    <View className="bg-[#FFF] rounded-lg shadow-sm border border-gray-200">
       <HeaderText text={"Calendar"}/>
       <CalendarHeader 
         currentDate={currentDate}

@@ -11,7 +11,7 @@ const CalendarHeader = ({ currentDate, onMonthChange, onRequestLeave }) => {
   const currentYear = currentDate.getFullYear();
 
   return (
-    <View className="px-4">
+    <View className="px-8">
       <View className="flex-row justify-between items-center mb-2">
         <View className="flex-row items-center">
           <Text className="text-xl font-bold text-gray-900 mr-4">
