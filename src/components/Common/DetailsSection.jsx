@@ -12,7 +12,7 @@ const DetailsSection = ({ title, details }) => {
           </View>
           <View className="w-2/3">
             <Text className="text-gray-900 text-sm">
-              {item.value.split('\n').map((line, i) => (
+              {item?.value?.split('\n').map((line, i) => (
                 <React.Fragment key={i}>
                   {line}
                   {i < item.value.split('\n').length - 1 && '\n'}

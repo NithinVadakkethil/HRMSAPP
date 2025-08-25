@@ -3,52 +3,33 @@ import { View, Text } from 'react-native';
 import HolidayColumn from './HolidayColumn';
 import HeaderText from '../../Common/HeaderText';
 
-const UpcomingHolidays = () => {
-  const leftColumnHolidays = [
-    {
-      day: '12',
-      month: 'Aug',
-      dayOfWeek: 'Monday',
-      holidayName: 'Dasara'
-    },
-    {
-      day: '15',
-      month: 'Aug',
-      dayOfWeek: 'Tuesday',
-      holidayName: 'Independace day'
-    },
-    {
-      day: '20',
-      month: 'Aug',
-      dayOfWeek: 'Wednesday',
-      holidayName: 'Dasara'
-    }
-  ];
+const UpcomingHolidays = ({ holidays }) => {
+  if (!holidays || holidays.length === 0) {
+    return null;
+  }
 
-  const rightColumnHolidays = [
-    {
-      day: '24',
-      month: 'Aug',
-      dayOfWeek: 'Sunday',
-      holidayName: 'Sunday'
-    },
-    {
-      day: '06',
-      month: 'Sept',
-      dayOfWeek: 'Tuesday',
-      holidayName: 'Dasara'
-    },
-    {
-      day: '08',
-      month: 'Sept',
-      dayOfWeek: 'Tuesday',
-      holidayName: 'Dasara'
-    }
-  ];
+  const formattedHolidays = holidays.map(holiday => {
+    const date = new Date(holiday.Holiday_date);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });
+    const dayOfWeek = date.toLocaleString('default', { weekday: 'long' });
+    return {
+      day: day,
+      month: month,
+      dayOfWeek: dayOfWeek,
+      holidayName: holiday.title
+    };
+  });
+
+  const middleIndex = Math.ceil(formattedHolidays.length / 2);
+  const leftColumnHolidays = formattedHolidays.slice(0, middleIndex);
+  const rightColumnHolidays = formattedHolidays.slice(middleIndex);
+
+  console.log("leftColumnHolidays--->", holidays)
 
   return (
     <View className="bg-[#FFF] shadow-sm mt-4">
-      <HeaderText text={"Upcoming Holidays"}/>
+      <HeaderText text={"Upcoming Holidays"} />
       <View className="mx-4">
         <View className="flex-row items-center gap-5 border-b pb-2 border-[#EBEFF3]">
           <Text className="text-[14px] font-inter-medium text-[#393B4C]">Public holiday</Text>

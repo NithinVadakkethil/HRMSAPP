@@ -21,19 +21,17 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
   const [description, setDescription] = useState('');
 
   const formatDate = (date) => {
-    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+    return new Date(date).toISOString().split("T")[0]; // yyyy-mm-dd
   };
 
   const handleSubmit = () => {
     const leaveData = {
-      leaveType,
-      fromDate,
-      toDate,
-      isHalfDay,
-      halfDayPeriod: isHalfDay ? halfDayPeriod : null,
-      description,
+      type_of_leave: leaveType,
+      from_date: formatDate(fromDate),
+      to_date: formatDate(toDate),
+      leave_day_type: isHalfDay ? "half Day" : "Full Day",
+      day_session: isHalfDay ? halfDayPeriod : "",
+      reason: description,
     };
     onSubmit(leaveData);
     onClose();
@@ -51,21 +49,21 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
       statusBarTranslucent={true}
     >
       <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ 
-          backgroundColor: 'white', 
-          borderTopLeftRadius: 24, 
+        <View style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
           maxHeight: '90%',
           minHeight: '60%'
         }}>
           {/* Header */}
-          <View style={{ 
-            flexDirection: 'row', 
-            alignItems: 'center', 
-            justifyContent: 'space-between', 
-            padding: 16, 
-            borderBottomWidth: 1, 
-            borderBottomColor: '#E5E7EB' 
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 16,
+            borderBottomWidth: 1,
+            borderBottomColor: '#E5E7EB'
           }}>
             <Text style={{ fontSize: 18, fontWeight: '600', color: '#374151' }}>
               Leave Request
@@ -75,8 +73,8 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
             </TouchableOpacity>
           </View>
 
-          <ScrollView 
-            style={{ flex: 1, padding: 16 }} 
+          <ScrollView
+            style={{ flex: 1, padding: 16 }}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
           >
@@ -85,21 +83,19 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
               <Text style={{ fontSize: 14, fontWeight: '500', color: '#374151', marginBottom: 8 }}>
                 Leave Type
               </Text>
-              <View style={{ 
-                borderWidth: 1, 
-                borderColor: '#D1D5DB', 
-                borderRadius: 8, 
-                backgroundColor: 'white' 
+              <View style={{
+                borderWidth: 1,
+                borderColor: '#D1D5DB',
+                borderRadius: 8,
+                backgroundColor: 'white'
               }}>
                 <Picker
                   selectedValue={leaveType}
                   onValueChange={(itemValue) => setLeaveType(itemValue)}
                   style={{ height: 50 }}
                 >
-                  <Picker.Item label="Paid Leave" value="Paid Leave" />
-                  <Picker.Item label="Sick Leave" value="Sick Leave" />
-                  <Picker.Item label="Casual Leave" value="Casual Leave" />
-                  <Picker.Item label="Unpaid Leave" value="Unpaid Leave" />
+                  <Picker.Item label="Sick Leave" value="2"/>
+                  <Picker.Item label="Casual Leave" value="1" />
                 </Picker>
               </View>
             </View>
@@ -113,13 +109,13 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 {/* From Date */}
                 <TouchableOpacity
                   onPress={() => setShowFromDatePicker(true)}
-                  style={{ 
-                    flex: 1, 
-                    borderWidth: 1, 
-                    borderColor: '#D1D5DB', 
-                    borderRadius: 8, 
-                    padding: 12, 
-                    backgroundColor: 'white' 
+                  style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#D1D5DB',
+                    borderRadius: 8,
+                    padding: 12,
+                    backgroundColor: 'white'
                   }}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -133,13 +129,13 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 {/* To Date */}
                 <TouchableOpacity
                   onPress={() => setShowToDatePicker(true)}
-                  style={{ 
-                    flex: 1, 
-                    borderWidth: 1, 
-                    borderColor: '#D1D5DB', 
-                    borderRadius: 8, 
-                    padding: 12, 
-                    backgroundColor: 'white' 
+                  style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#D1D5DB',
+                    borderRadius: 8,
+                    padding: 12,
+                    backgroundColor: 'white'
                   }}
                 >
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -152,10 +148,10 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
 
             {/* Half Day Option */}
             <View style={{ marginBottom: 16 }}>
-              <View style={{ 
-                flexDirection: 'row', 
-                alignItems: 'center', 
-                justifyContent: 'space-between' 
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <TouchableOpacity
@@ -176,13 +172,13 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                   </TouchableOpacity>
                   <Text style={{ color: '#374151', fontWeight: '500' }}>Half Day</Text>
                 </View>
-                
+
                 {isHalfDay && (
-                  <View style={{ 
-                    borderWidth: 1, 
-                    borderColor: '#D1D5DB', 
-                    borderRadius: 8, 
-                    backgroundColor: 'white' 
+                  <View style={{
+                    borderWidth: 1,
+                    borderColor: '#D1D5DB',
+                    borderRadius: 8,
+                    backgroundColor: 'white'
                   }}>
                     <Picker
                       selectedValue={halfDayPeriod}
@@ -250,6 +246,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 setShowFromDatePicker(false);
                 if (selectedDate) {
                   setFromDate(selectedDate);
+                  setFromDateFormatted(formatDate(selectedDate));
                 }
               }}
             />
@@ -264,6 +261,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 setShowToDatePicker(false);
                 if (selectedDate) {
                   setToDate(selectedDate);
+                  setToDateFormatted(formatDate(selectedDate));
                 }
               }}
             />

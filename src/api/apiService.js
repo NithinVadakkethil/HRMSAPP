@@ -66,8 +66,10 @@ export const getDashboardData = async () => {
  */
 export const createLeaveRequest = async (leaveData) => {
   try {
+    console.log("leaveData--->", leaveData)
     const response = await apiClient.post('/hrms/leave/request/', leaveData);
-    return response.data;
+    console.log("response--->", response)
+    return response;
   } catch (error) {
     console.error('Error creating leave request:', error);
     throw error;

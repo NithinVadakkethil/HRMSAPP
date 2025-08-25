@@ -1,28 +1,32 @@
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import React from 'react'
 import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../components'
+import { formatDate } from '../../common'
 
-const Access = () => {
+const Access = ({profileData}) => {
   const columns = [
     {
       header: 'Access software',
-      key: 'accessSoftware',
+      key: 'name',
       width: 170,
     },
     {
       header: 'User Name',
-      key: 'userName',
-      width: 160,
+      key: 'username',
+      width: 170,
     },
     {
       header: 'Password',
       key: 'password',
-      width: 90,
+      width: 100,
     },
     {
       header: 'Date',
       key: 'date',
       width: 100,
+      render: (row) => <Text className="text-sm text-gray-900">
+      {formatDate(row.date)}
+    </Text>
     },
     {
       header: 'Status',
@@ -82,12 +86,12 @@ const Access = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      <ProfileSection subDetails={false} />
+      <ProfileSection subDetails={false} personalInfo={profileData?.PersonalInfo}/>
       <View className='bg-[#FFF]'>
         <CustomTable
           title="Software Access"
           columns={columns}
-          data={accessData}
+          data={profileData?.Software_Access}
           onRowPress={handleRowPress}
         // containerStyle="mt-4"
         />

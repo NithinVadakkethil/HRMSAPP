@@ -1,18 +1,16 @@
 import apiClient from './apiClient';
-
-// This is a placeholder for your token storage.
-// You should replace this with a call to a secure storage solution
-// like AsyncStorage or a keychain library.
-let storedToken = null;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Stores the authentication token.
  * @param {string} token - The token to store.
  */
 export const storeToken = async (token) => {
-  // TODO: Implement token storage (e.g., await AsyncStorage.setItem('authToken', token));
-  console.log('Storing token:', token);
-  storedToken = token;
+  try {
+    await AsyncStorage.setItem('authToken', token);
+  } catch (error) {
+    console.error('Error storing token:', error);
+  }
 };
 
 /**
@@ -20,18 +18,23 @@ export const storeToken = async (token) => {
  * @returns {Promise<string|null>} The stored token.
  */
 export const retrieveToken = async () => {
-  // TODO: Implement token retrieval (e.g., await AsyncStorage.getItem('authToken'));
-  console.log('Retrieving token:', storedToken);
-  return storedToken;
+  try {
+    return await AsyncStorage.getItem('authToken');
+  } catch (error) {
+    console.error('Error retrieving token:', error);
+    return null;
+  }
 };
 
 /**
  * Clears the authentication token.
  */
 export const clearToken = async () => {
-  // TODO: Implement token clearing (e.g., await AsyncStorage.removeItem('authToken'));
-  console.log('Clearing token');
-  storedToken = null;
+  try {
+    await AsyncStorage.removeItem('authToken');
+  } catch (error) {
+    console.error('Error clearing token:', error);
+  }
 };
 
 /**

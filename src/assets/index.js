@@ -15,3 +15,8 @@ export { default as Balance } from './icons/balance.svg';
 export { default as Casual } from './icons/casual.svg';
 export { default as LeftArrow } from './icons/leftarrow.svg';
 export { default as RightArrow } from './icons/rightarrow.svg';
+export { default as Eye } from './icons/eye.svg';
+export { default as Download } from './icons/download.svg';
+export { default as ImageAvatar } from './icons/imageavatar.svg';
+export { default as Pdf } from './icons/pdf.svg';
+export { default as ImageViewer } from './icons/viewimage.svg';

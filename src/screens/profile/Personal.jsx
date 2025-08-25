@@ -1,20 +1,20 @@
-import { View, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import React from 'react'
 import { PersonalInformationCard, KYCDocuments, ExperienceDetails, BankDetailsCard, EducationQualification, Credentials } from '../../components'
 
-const Personal = () => {
+const Personal = ({ profileData }) => {
   return (
     <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-      <PersonalInformationCard/>
-      <KYCDocuments/>
-      <ExperienceDetails/>
-      <BankDetailsCard/>
-      <EducationQualification/>
-      <Credentials/>
+      <PersonalInformationCard personalInfo={profileData?.PersonalInfo} />
+      <KYCDocuments kycDocuments={profileData?.Documents} />
+      <ExperienceDetails experienceDetails={profileData?.ExperienceDetails} />
+      <BankDetailsCard bankDetails={profileData?.BankDetails} />
+      <EducationQualification educationQualification={profileData?.EducationQualification} />
+      <Credentials credentials={profileData?.LoginCredentials} />
     </ScrollView>
   )
 }

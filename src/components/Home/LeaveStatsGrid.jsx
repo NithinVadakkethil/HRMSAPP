@@ -3,43 +3,43 @@ import { View } from 'react-native';
 import LeaveStatCard from './LeaveStatCard';
 import { ToatalLeave, Balance, Casual, Unpaid, SickLeave, Taken } from '../../assets';
 
-const LeaveStatsGrid = () => {
+const LeaveStatsGrid = ({ leaveStats }) => {
   const leaveData = [
     {
       id: 1,
       IconComponent: ToatalLeave,
       label: "Total Leave",
-      value: "12"
+      value: leaveStats?.total_leave_allowed || "0"
     },
     {
       id: 2,
       IconComponent: Taken,
       label: "Taken",
-      value: "02"
+      value: leaveStats?.total_leave_taken || "0"
     },
     {
       id: 3,
       IconComponent: Casual,
       label: "Casual Leave",
-      value: "05"
+      value: leaveStats?.leave_summary["Casual Leave"].remaining || "0"
     },
     {
       id: 4,
       IconComponent: SickLeave,
       label: "Sick Leave",
-      value: "03"
+      value: leaveStats?.leave_summary["Sick leave"].remaining || "0"
     },
     {
       id: 5,
       IconComponent: Unpaid,
       label: "Unpaid Leave",
-      value: "04"
+      value: leaveStats?.unpaid_leave || "0"
     },
     {
       id: 6,
       IconComponent: Balance,
       label: "Balance",
-      value: "05"
+      value: leaveStats?.total_remaining_leave || "0"
     }
   ];
 
@@ -50,7 +50,7 @@ const LeaveStatsGrid = () => {
           key={item.id}
           IconComponent={item.IconComponent}
           label={item.label}
-          value={item.value}
+          value={String(item.value)}
         />
       ))}
     </View>

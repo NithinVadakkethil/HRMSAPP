@@ -1,74 +1,58 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Image } from 'react-native'
 import React from 'react'
 import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../components'
 
-const Assets = () => {
+const Assets = ({profileData}) => {
   const columns = [
     {
-      header: 'Access software',
-      key: 'accessSoftware',
-      width: 170,
+      header: 'Device',
+      key: 'asset_name',
+      width: 250,
+      render: (row) => (
+        <View className='flex-row items-center'>
+          <Image 
+            source={{ uri: row.asset_photo }}
+            style={{ width: 24, height: 24, marginRight: 8 }}
+            resizeMode="contain"
+          />
+          <Text className="text-sm text-gray-900">
+            {row.asset_name}
+          </Text>
+        </View>
+      )
     },
     {
-      header: 'User Name',
-      key: 'userName',
-      width: 160,
+      header: 'Serial Number / EMI / Registration',
+      key: 'serial_no',
+      width: 250,
     },
     {
-      header: 'Password',
-      key: 'password',
-      width: 90,
+      header: 'Model Number',
+      key: 'model_no',
+      width: 120,
     },
     {
-      header: 'Date',
-      key: 'date',
-      width: 100,
+      header: 'Attachments',
+      key: 'attachment',
+      width: 120,
+      render: (row) => (
+        <View className='flex-row items-center'>
+          {/* <Image 
+            source={{ uri: row.asset_photo }}
+            style={{ width: 24, height: 24, marginRight: 8 }}
+            resizeMode="contain"
+          /> */}
+          <Text className="text-sm text-gray-900">
+            {row.attachment || "-Nil-"}
+          </Text>
+        </View>
+      )
     },
     {
       header: 'Status',
       key: 'status',
       width: 120,
-      render: (row) => <StatusBadge status={row.status} />
-    },
-    {
-      header: 'Url',
-      key: 'url',
-      width: 170,
-    },
-  ];
-
-  const accessData = [
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },,
-    {
-      accessSoftware: 'SWA Notification Manager',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },,
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
+      render: (row) => <StatusBadge status={row.status || "Allocated"} />
     },
   ];
 
@@ -83,12 +67,12 @@ const Assets = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      <ProfileSection subDetails={false} />
+      <ProfileSection subDetails={false} personalInfo={profileData?.PersonalInfo}/>
       <View className='bg-[#FFF]'>
         <CustomTable
-            title="Software Access"
+            title="Assets Allocated"
             columns={columns}
-            data={accessData}
+            data={profileData?.Assets}
             onRowPress={handleRowPress}
             // containerStyle="mt-4"
           />

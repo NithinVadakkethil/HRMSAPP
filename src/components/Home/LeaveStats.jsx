@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import LeaveStatsGrid from './LeaveStatsGrid';
 
-const LeaveStats = () => {
+const LeaveStats = ({ leaveStats }) => {
   return (
     <View className="p-4">
-      <LeaveStatsGrid />
+      <LeaveStatsGrid leaveStats={leaveStats} />
     </View>
   );
 };
