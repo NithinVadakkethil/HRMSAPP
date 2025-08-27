@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import ChecklistItem from './ChecklistItem';
 
-const OnboardingChecklist = ({title}) => {
+const OnboardingChecklist = ({ title, info = [] }) => {
   return (
     <View className="p-4 bg-[#FFF]">
       <View className="mb-6">
@@ -10,8 +10,13 @@ const OnboardingChecklist = ({title}) => {
       </View>
 
       <View className="space-y-4">
-        <ChecklistItem label="Name Badge" isCompleted={true} />
-        <ChecklistItem label="ID Badge" isCompleted={true} />
+        {info.map((item) => (
+          <ChecklistItem
+            key={item.id}
+            label={item.item}
+            isCompleted={true}
+          />
+        ))}
       </View>
     </View>
   );

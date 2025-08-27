@@ -6,21 +6,35 @@ const CustomTable = ({
     columns,
     data,
     containerStyle = "",
-    onRowPress = null
+    onRowPress = null,
+    RightSection = null,
+    scroll = false
 }) => {
     return (
         <View className={`${containerStyle} mx-4`}>
-            {/* Table Header */}
-            <View className="py-4 flex-row justify-between items-center">
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                scrollEnabled={scroll}
+                contentContainerStyle={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingVertical: 16,
+                    minWidth: '100%' // This ensures full width
+                }}
+            >
                 <Text className="text-base font-bold text-gray-900">{title}</Text>
-            </View>
+                {RightSection && <RightSection />}
+            </ScrollView>
+            {/* Table Header */}
 
             {/* Scrollable Table Container */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View>
                     {/* Table Headers */}
                     <View className="flex-row rounded-t-[2px] border border-[#E2E4E9] bg-[#F6F8FA]">
-                        {columns.map((column, index) => (
+                        {columns?.map((column, index) => (
                             <View
                                 key={index}
                                 className="px-3 py-3 justify-center border-r border-[#E2E4E9] last:border-r-0"

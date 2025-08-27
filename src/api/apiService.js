@@ -12,11 +12,31 @@ import apiClient from './apiClient';
  */
 export const createContact = async (contactData) => {
   try {
+    console.log('Creating contact with data:', contactData);
+    console.log('Sending to endpoint:', '/hrms/create/contactmade/');
+    
     const response = await apiClient.post('/hrms/create/contactmade/', contactData);
+    
+    console.log('Contact creation response:', response);
+    console.log('Response status:', response.status);
+    console.log('Response data:', response.data);
+    
     return response.data;
   } catch (error) {
-    console.error('Error creating contact:', error);
-    throw error;
+    console.error('Error creating contact:');
+    console.error('Error status:', error.response?.status);
+    console.error('Error data:', error.response?.data);
+    console.error('Error headers:', error.response?.headers);
+    console.error('Full error:', error);
+    
+    // Re-throw with more context
+    if (error.response) {
+      throw new Error(`Server Error ${error.response.status}: ${JSON.stringify(error.response.data)}`);
+    } else if (error.request) {
+      throw new Error('Network Error: No response from server');
+    } else {
+      throw new Error(`Request Error: ${error.message}`);
+    }
   }
 };
 
@@ -27,6 +47,21 @@ export const createContact = async (contactData) => {
 export const getContacts = async () => {
   try {
     const response = await apiClient.get('/hrms/create/contactmade/');
+    // The list of contacts is in the 'data' array.
+    return response.data.results.data;
+  } catch (error) {
+    console.error('Error fetching contacts:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the list of offboarding items.
+ * @returns {Promise<Array<object>>} A list of contacts.
+ */
+export const getOffboardingList = async () => {
+  try {
+    const response = await apiClient.get('/hrms/offboarding/list/');
     // The list of contacts is in the 'data' array.
     return response.data.results.data;
   } catch (error) {
@@ -54,6 +89,24 @@ export const getDashboardData = async () => {
 };
 
 /**
+ * Fetches the dashboard data for the employee.
+ * This includes leave stats and public holidays.
+ * @returns {Promise<object>} The dashboard data.
+ */
+export const getLeaveRequests = async () => {
+  try {
+    const response = await apiClient.get('/hrms/leave/request/');
+    // The actual data is nested in the response.
+    return response.data.results.data;
+  } catch (error) {
+    // Log the error for debugging purposes.
+    console.error('Error fetching dashboard data:', error);
+    // Re-throw the error to be handled by the calling component.
+    throw error;
+  }
+};
+
+/**
  * Creates a new leave request.
  * @param {object} leaveData - The data for the leave request.
  * @param {string} leaveData.from_date - The start date of the leave (YYYY-MM-DD).
@@ -66,9 +119,7 @@ export const getDashboardData = async () => {
  */
 export const createLeaveRequest = async (leaveData) => {
   try {
-    console.log("leaveData--->", leaveData)
     const response = await apiClient.post('/hrms/leave/request/', leaveData);
-    console.log("response--->", response)
     return response;
   } catch (error) {
     console.error('Error creating leave request:', error);
@@ -102,8 +153,10 @@ export const getUserProfile = async () => {
  * @returns {Promise<object>} The response data from the server.
  */
 export const createResignation = async (resignationData) => {
+  console.log("resignationData-->", resignationData)
   try {
-    const response = await apiClient.post('/hrms/resignation/my/', resignationData);
+    const response = await apiClient.post('/hrms/resignation/post/', resignationData);
+    console.log("response--->", response)
     return response.data;
   } catch (error) {
     console.error('Error creating resignation request:', error);

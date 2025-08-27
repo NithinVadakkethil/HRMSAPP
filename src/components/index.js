@@ -35,4 +35,7 @@ export { default as ChecklistItem } from './Common/ChecklistItem';
 export { default as Checkmark } from './Common/Checkmark';
 export { default as CustomTable } from './Home/attendance/CustomTable';
 export { default as StatusBadge } from './Home/attendance/StatusBadge';
+export { default as ResignationForm } from './ResignationForm/ResignationForm';
+export { default as ContactMadeForm } from './ContactMadeForm/ContactMadeForm';
+export { default as Anniversary } from './Home/Anniversary';
 

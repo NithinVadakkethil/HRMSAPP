@@ -6,8 +6,6 @@ const TopTab = createMaterialTopTabNavigator();
 
 const ProfileTopTabs = (props) => {
 
-  console.log("props.profileData-->", props.profileData)
-
   return (
     <TopTab.Navigator
       screenOptions={{
@@ -69,13 +67,18 @@ const ProfileTopTabs = (props) => {
       />
       <TopTab.Screen
         name="Onboard"
-        component={() => <Onboard />}
+        component={() => <Onboard profileData={props.profileData} />}
         options={{ tabBarLabel: 'Onboarding' }}
       />
       <TopTab.Screen
         name="Offboard"
-        component={() => <Offboard />}
+        component={() => <Offboard profileData={props.profileData} />}
         options={{ tabBarLabel: 'Offboarding' }}
+      />
+      <TopTab.Screen
+        name="ContactMade"
+        component={() => <ContactMade profileData={props.profileData} />}
+        options={{ tabBarLabel: 'ContactMade' }}
       />
     </TopTab.Navigator>
   );

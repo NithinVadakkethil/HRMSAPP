@@ -41,40 +41,6 @@ const Access = ({profileData}) => {
     },
   ];
 
-  const accessData = [
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },
-    {
-      accessSoftware: 'SWA Notification Manager',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },
-    {
-      accessSoftware: 'SWA DMS',
-      userName: 'Inshad-12',
-      password: '**********',
-      date: '25 Aug 2024',
-      status: 'Access Granded',
-      url: 'https://hrmstest.zinfog.in/',
-    },
-  ];
   const handleRowPress = (row) => {
     console.log('Row pressed:', row);
     // Handle row press action here

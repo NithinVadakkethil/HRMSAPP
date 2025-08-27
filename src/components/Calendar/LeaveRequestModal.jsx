@@ -6,12 +6,15 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { createLeaveRequest } from '../../api/apiService'; // Import the API function
+import { DateCalendar, Close } from '../../assets';
 
 const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
-  const [leaveType, setLeaveType] = useState('Paid Leave');
+  const [leaveType, setLeaveType] = useState('1'); // Default to Casual Leave ID
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [showFromDatePicker, setShowFromDatePicker] = useState(false);
@@ -19,25 +22,89 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
   const [isHalfDay, setIsHalfDay] = useState(false);
   const [halfDayPeriod, setHalfDayPeriod] = useState('Morning');
   const [description, setDescription] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formatDate = (date) => {
     return new Date(date).toISOString().split("T")[0]; // yyyy-mm-dd
   };
 
-  const handleSubmit = () => {
-    const leaveData = {
-      type_of_leave: leaveType,
-      from_date: formatDate(fromDate),
-      to_date: formatDate(toDate),
-      leave_day_type: isHalfDay ? "half Day" : "Full Day",
-      day_session: isHalfDay ? halfDayPeriod : "",
-      reason: description,
-    };
-    onSubmit(leaveData);
-    onClose();
-    // Reset form
-    setDescription('');
+  const handleSubmit = async () => {
+    // Validate form
+    if (!fromDate || !toDate || !description.trim()) {
+      Alert.alert('Validation Error', 'Please fill all required fields');
+      return;
+    }
+
+    if (toDate < fromDate) {
+      Alert.alert('Validation Error', 'To date must be after from date');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const leaveData = {
+        type_of_leave: leaveType, // This should be the ID (1 or 2)
+        from_date: formatDate(fromDate),
+        to_date: formatDate(toDate),
+        leave_day_type: isHalfDay ? "half Day" : "Full Day", // Match exact API expectation
+        day_session: isHalfDay ? halfDayPeriod : "", // Only send if half day
+        reason: description.trim(),
+      };
+
+      console.log('Leave request data:', leaveData);
+
+      // Call the API
+      const response = await createLeaveRequest(leaveData);
+
+      console.log('Leave request response:', response);
+
+      // Show success message
+      Alert.alert('Success', 'Leave request submitted successfully', [
+        {
+          text: 'OK',
+          onPress: () => {
+            // Notify parent component
+            if (onSubmit) {
+              onSubmit(response.data);
+            }
+
+            // Reset form
+            resetForm();
+            onClose();
+          }
+        }
+      ]);
+
+    } catch (error) {
+      console.error('Error submitting leave request:', error);
+
+      // Show detailed error message
+      let errorMessage = 'Failed to submit leave request. Please try again.';
+      if (error.response?.data) {
+        errorMessage = JSON.stringify(error.response.data);
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+
+      Alert.alert('Submission Error', errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setLeaveType('1');
+    setFromDate(new Date());
+    setToDate(new Date());
     setIsHalfDay(false);
+    setHalfDayPeriod('Morning');
+    setDescription('');
+  };
+
+  const handleCancel = () => {
+    resetForm();
+    onClose();
   };
 
   return (
@@ -48,7 +115,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
       onRequestClose={onClose}
       statusBarTranslucent={true}
     >
-      <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0, 0, 0, 0.74)' }}>
         <View style={{
           backgroundColor: 'white',
           borderTopLeftRadius: 24,
@@ -60,16 +127,15 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
           <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             padding: 16,
-            borderBottomWidth: 1,
-            borderBottomColor: '#E5E7EB'
+            position: "relative"
           }}>
             <Text style={{ fontSize: 18, fontWeight: '600', color: '#374151' }}>
               Leave Request
             </Text>
-            <TouchableOpacity onPress={onClose} style={{ padding: 4 }}>
-              <Text style={{ fontSize: 20, color: '#6B7280' }}>×</Text>
+            <TouchableOpacity onPress={handleCancel} style={{ position: 'absolute', right: 20 }}>
+              <Close/>
             </TouchableOpacity>
           </View>
 
@@ -81,7 +147,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
             {/* Leave Type */}
             <View style={{ marginBottom: 16 }}>
               <Text style={{ fontSize: 14, fontWeight: '500', color: '#374151', marginBottom: 8 }}>
-                Leave Type
+                Leave Type*
               </Text>
               <View style={{
                 borderWidth: 1,
@@ -94,8 +160,8 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                   onValueChange={(itemValue) => setLeaveType(itemValue)}
                   style={{ height: 50 }}
                 >
-                  <Picker.Item label="Sick Leave" value="2"/>
                   <Picker.Item label="Casual Leave" value="1" />
+                  <Picker.Item label="Sick Leave" value="2" />
                 </Picker>
               </View>
             </View>
@@ -118,8 +184,8 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                     backgroundColor: 'white'
                   }}
                 >
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ color: '#3B82F6', marginRight: 8 }}>📅</Text>
+                  <View className='flex-row items-center gap-2'>
+                    <DateCalendar width={20} height={20} />
                     <Text style={{ color: '#374151' }}>{formatDate(fromDate)}</Text>
                   </View>
                 </TouchableOpacity>
@@ -138,8 +204,8 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                     backgroundColor: 'white'
                   }}
                 >
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ color: '#3B82F6', marginRight: 8 }}>📅</Text>
+                  <View className='flex-row items-center gap-2'>
+                    <DateCalendar width={20} height={20} />
                     <Text style={{ color: '#374151' }}>{formatDate(toDate)}</Text>
                   </View>
                 </TouchableOpacity>
@@ -186,7 +252,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                       style={{ width: 120, height: 40 }}
                     >
                       <Picker.Item label="Morning" value="Morning" />
-                      <Picker.Item label="Evening" value="Evening" />
+                      <Picker.Item label="Afternoon" value="Afternoon" />
                     </Picker>
                   </View>
                 )}
@@ -196,12 +262,12 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
             {/* Description */}
             <View style={{ marginBottom: 24 }}>
               <Text style={{ fontSize: 14, fontWeight: '500', color: '#374151', marginBottom: 8 }}>
-                Description
+                Discription
               </Text>
               <TextInput
                 value={description}
                 onChangeText={setDescription}
-                placeholder="Write your Description"
+                placeholder="Write your reason for leave"
                 placeholderTextColor="#9CA3AF"
                 multiline
                 numberOfLines={4}
@@ -210,7 +276,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                   borderColor: '#D1D5DB',
                   borderRadius: 8,
                   padding: 12,
-                  backgroundColor: 'white',
+                  backgroundColor: '#F8FAFC',
                   color: '#374151',
                   textAlignVertical: 'top',
                   minHeight: 100,
@@ -218,22 +284,25 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
               />
             </View>
 
-            {/* Submit Button */}
-            <TouchableOpacity
-              onPress={handleSubmit}
-              style={{
-                backgroundColor: '#0D9488',
-                borderRadius: 8,
-                paddingVertical: 16,
-                alignItems: 'center',
-                marginBottom: 16,
-              }}
-              activeOpacity={0.8}
-            >
-              <Text style={{ color: 'white', fontWeight: '600', fontSize: 16 }}>
-                Create Leave
-              </Text>
-            </TouchableOpacity>
+            {/* Action Buttons */}
+            <View style={{ flexDirection: 'row', gap: 12 }}>
+              <TouchableOpacity
+                onPress={handleSubmit}
+                disabled={isSubmitting}
+                style={{
+                  flex: 1,
+                  backgroundColor: isSubmitting ? '#9CA3AF' : '#007583',
+                  borderRadius: 8,
+                  paddingVertical: 16,
+                  alignItems: 'center',
+                }}
+                activeOpacity={0.8}
+              >
+                <Text className='font-inter text-sm text-[#FFF]'>
+                  {isSubmitting ? 'Submitting...' : 'Create Leave'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
 
           {/* Date Pickers */}
@@ -246,7 +315,6 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 setShowFromDatePicker(false);
                 if (selectedDate) {
                   setFromDate(selectedDate);
-                  setFromDateFormatted(formatDate(selectedDate));
                 }
               }}
             />
@@ -261,7 +329,6 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 setShowToDatePicker(false);
                 if (selectedDate) {
                   setToDate(selectedDate);
-                  setToDateFormatted(formatDate(selectedDate));
                 }
               }}
             />

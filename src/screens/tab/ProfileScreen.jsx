@@ -1,10 +1,11 @@
 import { View, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { CustomHeader } from '../../components';
+import { CustomHeader, Anniversary } from '../../components';
 import ProfileTopTabs from '../profile/ProfileTopTabs';
 import { getUserProfile } from '../../api/apiService';
 
 const ProfileScreen = () => {
+  const [anniversaryPopUp, setAnniversaryPopUp] = useState(false)
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,6 +14,9 @@ const ProfileScreen = () => {
     const fetchUserProfile = async () => {
       try {
         const data = await getUserProfile();
+        if(data?.work_anniversary_message){
+          setAnniversaryPopUp(true)
+        }
         setProfileData(data);
       } catch (err) {
         setError('Failed to fetch profile data.');
@@ -44,11 +48,12 @@ const ProfileScreen = () => {
 
   return (
     <View className='flex-1'>
-      <CustomHeader 
-        title="Employee Profile" 
-        logo={false} 
+      <CustomHeader
+        title="Employee Profile"
+        logo={false}
       />
       <ProfileTopTabs profileData={profileData} />
+      <Anniversary onClose={() => setAnniversaryPopUp(false)} visible={anniversaryPopUp} />
     </View>
   );
 }
