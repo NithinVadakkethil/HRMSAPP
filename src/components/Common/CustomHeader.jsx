@@ -8,16 +8,11 @@ import { logout } from '../../api/auth';
 const CustomHeader = ({
   logo = true,
   title,
-  onBackPress,
 }) => {
   const navigation = useNavigation();
 
   const handleBackPress = () => {
-    if (onBackPress) {
-      onBackPress();
-    } else {
-      navigation.goBack();
-    }
+    navigation.goBack();
   };
 
   const handleLogoutPress = async () => {
