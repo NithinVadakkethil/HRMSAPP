@@ -9,35 +9,56 @@ const Document = ({ profileData }) => {
 
   const apiResponse = profileData?.Documents;
 
-  // Transform API response to match our document structure and filter out null/empty documents
-  const allDocuments = [
+  // Transform API response to match our document structure for official documents
+  const officialDocuments = [
     {
       sectionTitle: 'Aadhaar Card',
       fileName: 'Aadhaar Card.jpg',
       fileType: 'jpg',
       fileUrl: apiResponse?.adaar_file,
-      idNumber: apiResponse?.adaar_no
+      idNumber: apiResponse?.adaar_no,
+      category: 'official'
     },
     {
       sectionTitle: 'PAN Card',
       fileName: 'PAN Card.jpeg',
       fileType: 'jpeg',
       fileUrl: apiResponse?.pancard_file,
-      idNumber: apiResponse?.pancard_no
+      idNumber: apiResponse?.pancard_no,
+      category: 'official'
     },
     {
       sectionTitle: 'Passport',
       fileName: 'Passport.jpeg',
       fileType: 'jpeg',
       fileUrl: apiResponse?.passport_file,
-      idNumber: apiResponse?.passport_no
+      idNumber: apiResponse?.passport_no,
+      category: 'official'
     }
   ];
 
+  // Transform additional documents
+  const additionalDocuments = (profileData?.AdditionalDocuments || []).map((doc, index) => ({
+    sectionTitle: doc.doc_name || `Document ${index + 1}`,
+    fileName: doc.document?.split('/').pop() || `document_${index + 1}.pdf`,
+    fileType: doc.document?.split('.').pop() || 'pdf',
+    fileUrl: doc.document,
+    idNumber: doc.uploaded_at ? new Date(doc.uploaded_at).toLocaleDateString() : '',
+    uploadedAt: doc.uploaded_at,
+    category: 'additional'
+  }));
+
   // Filter out documents that don't have a valid file URL
-  const documents = allDocuments.filter(doc => {
-    return doc.fileUrl && doc.fileUrl !== null && doc.fileUrl !== undefined && doc.fileUrl.trim() !== '';
-  });
+  const filteredOfficialDocs = officialDocuments.filter(doc => 
+    doc.fileUrl && doc.fileUrl !== null && doc.fileUrl !== undefined && doc.fileUrl.trim() !== ''
+  );
+
+  const filteredAdditionalDocs = additionalDocuments.filter(doc => 
+    doc.fileUrl && doc.fileUrl !== null && doc.fileUrl !== undefined && doc.fileUrl.trim() !== ''
+  );
+
+  // Combine all documents into a single array
+  const allDocuments = [...filteredOfficialDocs, ...filteredAdditionalDocs];
 
   const handleViewDocument = (doc, index) => {
     setSelectedDocument(doc);
@@ -132,11 +153,8 @@ const Document = ({ profileData }) => {
     }
   };
 
-  console.log("profileData?.Documents--->", profileData?.Documents);
-  console.log("Available documents count:", documents.length);
-
   return (
-    <>
+    <View className='flex-1 bg-[#F9F9F9]'>
       <ProfileSection subDetails={false} personalInfo={profileData?.PersonalInfo} />
       <View className='flex-1 px-4 bg-[#FFF]'>
         <DocumentViewer 
@@ -147,14 +165,18 @@ const Document = ({ profileData }) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 40 }}
         >
-          {documents.length > 0 ? (
-            documents.map((doc, index) => (
+          {/* Display all documents without sections */}
+          {allDocuments.length > 0 ? (
+            allDocuments.map((doc, index) => (
               <DocumentRow
-                key={index}
+                key={`document-${index}`}
                 sectionTitle={doc.sectionTitle}
                 fileName={doc.fileName}
                 fileType={doc.fileType}
-                idNumber={doc.idNumber}
+                idNumber={doc.category === 'additional' && doc.uploadedAt 
+                  ? `Uploaded: ${new Date(doc.uploadedAt).toLocaleDateString()}` 
+                  : doc.idNumber
+                }
                 isSelected={selectedIndex === index}
                 onView={() => handleViewDocument(doc, index)}
                 onDownload={() => handleDownload(doc)}
@@ -167,7 +189,7 @@ const Document = ({ profileData }) => {
           )}
         </ScrollView>
       </View>
-    </>
+    </View>
   );
 };
 

@@ -12,23 +12,9 @@ import apiClient from './apiClient';
  */
 export const createContact = async (contactData) => {
   try {
-    console.log('Creating contact with data:', contactData);
-    console.log('Sending to endpoint:', '/hrms/create/contactmade/');
-    
     const response = await apiClient.post('/hrms/create/contactmade/', contactData);
-    
-    console.log('Contact creation response:', response);
-    console.log('Response status:', response.status);
-    console.log('Response data:', response.data);
-    
     return response.data;
   } catch (error) {
-    console.error('Error creating contact:');
-    console.error('Error status:', error.response?.status);
-    console.error('Error data:', error.response?.data);
-    console.error('Error headers:', error.response?.headers);
-    console.error('Full error:', error);
-    
     // Re-throw with more context
     if (error.response) {
       throw new Error(`Server Error ${error.response.status}: ${JSON.stringify(error.response.data)}`);
@@ -156,7 +142,6 @@ export const createResignation = async (resignationData) => {
   console.log("resignationData-->", resignationData)
   try {
     const response = await apiClient.post('/hrms/resignation/post/', resignationData);
-    console.log("response--->", response)
     return response.data;
   } catch (error) {
     console.error('Error creating resignation request:', error);
@@ -164,3 +149,71 @@ export const createResignation = async (resignationData) => {
   }
 };
 
+// Add these functions to your apiService.js file
+
+export const updateLeaveRequest = async (leaveId, leaveData) => {
+  try {
+    const response = await apiClient.patch(`/hrms/update/leave/request/${leaveId}/`, leaveData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating leave request:', error);
+    throw error;
+  }
+};
+
+export const deleteLeaveRequest = async (leaveId) => {
+  try {
+    const response = await apiClient.delete(`/hrms/delete/leave/request/${leaveId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting leave request:', error);
+    throw error;
+  }
+};
+
+/** Updates an existing contact made record.
+ * @param {number} contactId - The ID of the contact to update.
+ * @param {object} contactData - The updated data for the contact.
+ * @param {string} contactData.clientname - The name of the client.
+ * @param {string} contactData.mobilenumber - The mobile number of the client.
+ * @param {string} contactData.email - The email of the client.
+ * @param {string} contactData.response - The response from the client.
+ * @param {string} contactData.status - The status of the contact.
+ * @returns {Promise<object>} The response data from the server.
+ */
+export const updateContact = async (contactId, contactData) => {
+  try {
+    const response = await apiClient.patch(`/hrms/update/${contactId}/contactmade/`, contactData);
+    return response.data;
+  } catch (error) {
+    // Re-throw with more context
+    if (error.response) {
+      throw new Error(`Server Error ${error.response.status}: ${JSON.stringify(error.response.data)}`);
+    } else if (error.request) {
+      throw new Error('Network Error: No response from server');
+    } else {
+      throw new Error(`Request Error: ${error.message}`);
+    }
+  }
+};
+
+/**
+ * Deletes a contact made record.
+ * @param {number} contactId - The ID of the contact to delete.
+ * @returns {Promise<object>} The response data from the server.
+ */
+export const deleteContact = async (contactId) => {
+  try {
+    const response = await apiClient.delete(`/hrms/delete/${contactId}/contactmade/`);    
+    return response.data;
+  } catch (error) {
+    // Re-throw with more context
+    if (error.response) {
+      throw new Error(`Server Error ${error.response.status}: ${JSON.stringify(error.response.data)}`);
+    } else if (error.request) {
+      throw new Error('Network Error: No response from server');
+    } else {
+      throw new Error(`Request Error: ${error.message}`);
+    }
+  }
+};

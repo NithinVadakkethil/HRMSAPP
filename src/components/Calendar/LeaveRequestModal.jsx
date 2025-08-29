@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,11 +10,10 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { createLeaveRequest } from '../../api/apiService'; // Import the API function
 import { DateCalendar, Close } from '../../assets';
 
-const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
-  const [leaveType, setLeaveType] = useState('1'); // Default to Casual Leave ID
+const LeaveRequestModal = ({ visible, onClose, onSubmit, editData }) => {
+  const [leaveType, setLeaveType] = useState('1');
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [showFromDatePicker, setShowFromDatePicker] = useState(false);
@@ -23,6 +22,21 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
   const [halfDayPeriod, setHalfDayPeriod] = useState('Morning');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Populate form when editData is provided
+  useEffect(() => {
+    if (editData && visible) {
+      setLeaveType(editData.type_of_leave.toString());
+      setFromDate(new Date(editData.from_date));
+      setToDate(new Date(editData.to_date));
+      setIsHalfDay(editData.leave_day_type === 'half Day');
+      setHalfDayPeriod(editData.day_session || 'Morning');
+      setDescription(editData.reason || '');
+    } else if (visible && !editData) {
+      // Reset form for new request
+      resetForm();
+    }
+  }, [editData, visible]);
 
   const formatDate = (date) => {
     return new Date(date).toISOString().split("T")[0]; // yyyy-mm-dd
@@ -44,42 +58,25 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
 
     try {
       const leaveData = {
-        type_of_leave: leaveType, // This should be the ID (1 or 2)
+        type_of_leave: leaveType,
         from_date: formatDate(fromDate),
         to_date: formatDate(toDate),
-        leave_day_type: isHalfDay ? "half Day" : "Full Day", // Match exact API expectation
-        day_session: isHalfDay ? halfDayPeriod : "", // Only send if half day
+        leave_day_type: isHalfDay ? "half Day" : "Full Day",
+        day_session: isHalfDay ? halfDayPeriod : "",
         reason: description.trim(),
       };
 
       console.log('Leave request data:', leaveData);
 
-      // Call the API
-      const response = await createLeaveRequest(leaveData);
+      // Call the parent component's submit handler
+      await onSubmit(leaveData);
 
-      console.log('Leave request response:', response);
-
-      // Show success message
-      Alert.alert('Success', 'Leave request submitted successfully', [
-        {
-          text: 'OK',
-          onPress: () => {
-            // Notify parent component
-            if (onSubmit) {
-              onSubmit(response.data);
-            }
-
-            // Reset form
-            resetForm();
-            onClose();
-          }
-        }
-      ]);
+      // Reset form
+      resetForm();
 
     } catch (error) {
       console.error('Error submitting leave request:', error);
-
-      // Show detailed error message
+      
       let errorMessage = 'Failed to submit leave request. Please try again.';
       if (error.response?.data) {
         errorMessage = JSON.stringify(error.response.data);
@@ -107,6 +104,8 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
     onClose();
   };
 
+  const isEditMode = !!editData;
+
   return (
     <Modal
       visible={visible}
@@ -132,7 +131,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
             position: "relative"
           }}>
             <Text style={{ fontSize: 18, fontWeight: '600', color: '#374151' }}>
-              Leave Request
+              {isEditMode ? 'Update Leave Request' : 'Leave Request'}
             </Text>
             <TouchableOpacity onPress={handleCancel} style={{ position: 'absolute', right: 20 }}>
               <Close/>
@@ -262,7 +261,7 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
             {/* Description */}
             <View style={{ marginBottom: 24 }}>
               <Text style={{ fontSize: 14, fontWeight: '500', color: '#374151', marginBottom: 8 }}>
-                Discription
+                Description*
               </Text>
               <TextInput
                 value={description}
@@ -299,7 +298,10 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit }) => {
                 activeOpacity={0.8}
               >
                 <Text className='font-inter text-sm text-[#FFF]'>
-                  {isSubmitting ? 'Submitting...' : 'Create Leave'}
+                  {isSubmitting 
+                    ? (isEditMode ? 'Updating...' : 'Creating...') 
+                    : (isEditMode ? 'Update Leave' : 'Create Leave')
+                  }
                 </Text>
               </TouchableOpacity>
             </View>

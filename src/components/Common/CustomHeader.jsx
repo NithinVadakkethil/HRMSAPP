@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Bell, Search, Comment, BrandLogo, Logout } from '../../assets';
+import { Back, Search, Comment, BrandLogo, Logout } from '../../assets';
 import { logout } from '../../api/auth';
 
 const CustomHeader = ({
@@ -43,11 +43,11 @@ const CustomHeader = ({
             onPress={handleBackPress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            {/* <Icon name={ICONS.BACK} size={24} color="white" /> */}
+            <Back />
           </TouchableOpacity>}
         </View>
         <Text className="text-[#22012F] text-xl font-inter-bold">{title}</Text>
-        <View className="flex-row items-center">
+        <View className="flex-row items-center gap-1.5">
           <TouchableOpacity
             className="p-1"
             // onPress={}

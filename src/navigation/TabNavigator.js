@@ -8,7 +8,6 @@ import {
   NotificationScreen,
   InboxScreen
 } from "../screens";
-// import { ICONS, COLORS } from "../constants";
 import { Home, Leave, Report, Profile } from "../assets";
 
 const Tab = createBottomTabNavigator();
@@ -17,27 +16,23 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color }) => {
-          const iconSize = 20;
-
+        tabBarIcon: ({ focused, color, size }) => {
+          // Clone the icon element and apply color based on active state
           const icons = {
-            Home: <Home width={iconSize} height={iconSize} fill={color} />,
-            Leave: <Leave width={iconSize} height={iconSize} fill={color} />,
-            Report: (
-              <Report width={iconSize} height={iconSize} fill={color} />
-            ),
-            Profile: (
-              <Profile width={iconSize} height={iconSize} fill={color}/>
-            ),
+            Home: React.cloneElement(<Home fill={focused ? "#007583" : "#111827"}/>),
+            Leave: React.cloneElement(<Leave fill={focused ? "#007583" : "#111827"}/>),
+            Report: React.cloneElement(<Report fill={focused ? "#007583" : "#111827"}/>),
+            Profile: React.cloneElement(<Profile fill={focused ? "#007583" : "#111827"} />),
           };
 
           return icons[route.name];
         },
-        tabBarActiveTintColor: "green",
-        tabBarInactiveTintColor: "green",
+        tabBarActiveTintColor: "#007583", // Active text color (blue)
+        tabBarInactiveTintColor: "#111827", // Inactive text color (gray)
         tabBarStyle: {
-          backgroundColor: "#fff",
-          borderTopWidth: 0,
+          backgroundColor: "#FFF",
+          borderTopWidth: 0.5,
+          borderTopColor: '#ECEEF2',
           elevation: 8,
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,

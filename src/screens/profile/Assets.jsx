@@ -63,7 +63,7 @@ const Assets = ({profileData}) => {
   
   return (
     <ScrollView
-      className="flex-1"
+      className="flex-1 bg-[#F9F9F9]"
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 20 }}
     >

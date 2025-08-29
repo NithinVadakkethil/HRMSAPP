@@ -11,8 +11,22 @@ const StatusBadge = ({ status }) => {
                 return 'bg-red-100';
             case 'Absent':
                 return 'bg-gray-100';
+            case 'Approved':
+                return 'bg-[#22C55E]'
+            case 'Pending':
+                return 'bg-[#6B7280]'
+            case 'Access Granted':
+                return 'bg-[#DEFFBD]'
+            case 'Allocated':
+                return 'bg-[#DEFFBD]'
+            case 'Completed':
+                return 'bg-[#22C55E]'
+            case 'In Progress':
+                return 'bg-[#F59E0B]'
+            case 'Interested':
+                return 'bg-[#3B82F6]'
             default:
-                return 'bg-gray-100';
+                return 'bg-[#E7E9ED]';
         }
     };
 
@@ -24,8 +38,12 @@ const StatusBadge = ({ status }) => {
                 return 'text-red-800';
             case 'Absent':
                 return 'text-gray-800';
+            case 'Access Granted':
+                return 'text-[#4E9C00]';
+            case 'Allocated':
+                return 'text-[#4E9C00]';
             default:
-                return 'text-gray-800';
+                return 'text-[#F0FDF4]';
         }
     };
 

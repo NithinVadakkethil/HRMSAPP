@@ -3,8 +3,10 @@ import { getAuthToken } from './auth'; // Assuming you have a function to get th
 
 // NOTE: The base URL should point to your production API.
 // For local development, you might use 'http://127.0.0.1:8000'.
+
 const apiClient = axios.create({
-  baseURL: 'https://swahrmanagerapi.zinfog.in',
+  baseURL: 'https://swahrmanagerapi.zinfog.in', //Development
+  // baseURL: 'https://hrmsapi.swadiamonds.com', //Production
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,18 @@ import {
   Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { createContact } from '../../api/apiService';
+import { createContact, updateContact } from '../../api/apiService';
 
-const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
+const ContactMadeForm = ({ visible, onClose, onSubmit, editingContact }) => {
   const [clientName, setClientName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [email, setEmail] = useState('');
   const [response, setResponse] = useState('Interested');
   const [status, setStatus] = useState('Pending');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Check if we're in edit mode
+  const isEditMode = editingContact !== null;
 
   // Response dropdown options
   const responseOptions = [
@@ -32,6 +35,21 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
     { label: 'Completed', value: 'Completed' },
     { label: 'In Progress', value: 'In Progress' },
   ];
+
+  // Populate form when editing
+  useEffect(() => {
+    if (isEditMode && editingContact) {
+      console.log('Populating form with editing contact:', editingContact);
+      setClientName(editingContact.clientname || '');
+      setMobileNumber(editingContact.mobilenumber || '');
+      setEmail(editingContact.email || '');
+      setResponse(editingContact.response || 'Interested');
+      setStatus(editingContact.status || 'Pending');
+    } else {
+      // Reset form for create mode
+      resetForm();
+    }
+  }, [isEditMode, editingContact, visible]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,13 +102,24 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
 
       console.log('Contact data to submit:', contactData);
 
-      // Call the API
-      const apiResponse = await createContact(contactData);
+      let apiResponse;
+      let successMessage;
+
+      if (isEditMode) {
+        // Update existing contact
+        console.log('Updating contact with ID:', editingContact.id);
+        apiResponse = await updateContact(editingContact.id, contactData);
+        successMessage = 'Contact updated successfully';
+      } else {
+        // Create new contact
+        apiResponse = await createContact(contactData);
+        successMessage = 'Contact created successfully';
+      }
       
-      console.log('Contact created successfully:', apiResponse);
+      console.log('API operation completed successfully:', apiResponse);
 
       // Show success message
-      Alert.alert('Success', 'Contact created successfully', [
+      Alert.alert('Success', successMessage, [
         {
           text: 'OK',
           onPress: () => {
@@ -107,10 +136,10 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
       ]);
 
     } catch (error) {
-      console.error('Error creating contact:', error);
+      console.error('Error submitting contact:', error);
       
       // Show detailed error message
-      let errorMessage = 'Failed to create contact. Please try again.';
+      let errorMessage = `Failed to ${isEditMode ? 'update' : 'create'} contact. Please try again.`;
       if (error.response?.data) {
         errorMessage = JSON.stringify(error.response.data);
       } else if (error.message) {
@@ -162,7 +191,7 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
             borderBottomColor: '#E5E7EB'
           }}>
             <Text style={{ fontSize: 18, fontWeight: '600', color: '#374151' }}>
-              Sales Executive Details
+              {isEditMode ? 'Edit Contact Details' : 'Sales Executive Details'}
             </Text>
             <TouchableOpacity onPress={handleCancel} style={{ padding: 4 }}>
               <Text style={{ fontSize: 20, color: '#6B7280' }}>×</Text>
@@ -187,14 +216,24 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
                 backgroundColor: '#F9FAFB'
               }}>
                 <Text style={{ color: '#6B7280' }}>
-                  {new Date().toLocaleDateString('en-GB', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                  })}
+                  {isEditMode && editingContact?.date_time 
+                    ? new Date(editingContact.date_time).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })
+                    : new Date().toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })
+                  }
                 </Text>
               </View>
             </View>
@@ -353,7 +392,10 @@ const ContactMadeForm = ({ visible, onClose, onSubmit }) => {
                 activeOpacity={0.8}
               >
                 <Text style={{ color: 'white', fontWeight: '600', fontSize: 16 }}>
-                  {isSubmitting ? 'Creating...' : 'Create'}
+                  {isSubmitting 
+                    ? (isEditMode ? 'Updating...' : 'Creating...') 
+                    : (isEditMode ? 'Update' : 'Create')
+                  }
                 </Text>
               </TouchableOpacity>
             </View>

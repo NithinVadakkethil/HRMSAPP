@@ -15,15 +15,17 @@ const ProfileTopTabs = (props) => {
           textTransform: 'none', // prevents uppercase
         },
         tabBarIndicatorStyle: {
-          backgroundColor: 'green', // color of the underline
+          backgroundColor: '#2A8E9E', // color of the underline
           height: 2,
         },
-        tabBarActiveTintColor: 'green', // color of active tab text
-        tabBarInactiveTintColor: 'gray', // color of inactive tab text
+        tabBarActiveTintColor: '#2A8E9E', // color of active tab text
+        tabBarInactiveTintColor: '#696F82', // color of inactive tab text
         tabBarStyle: {
-          backgroundColor: 'white', // background color of the tab bar
+          backgroundColor: '#F9F9F9', // background color of the tab bar
           elevation: 0, // remove shadow on Android
           shadowOpacity: 0, // remove shadow on iOS
+          borderBottomWidth: 2, // Add this line
+          borderBottomColor: '#D2DBE4',
         },
         tabBarItemStyle: {
           width: 'auto', // makes tabs only as wide as their content

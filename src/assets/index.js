@@ -27,5 +27,6 @@ export { default as Logout } from './icons/logout.svg';
 export { default as Bin } from './icons/bin.svg';
 export { default as CheckPad } from './icons/checkpad.svg';
 export { default as Lens } from './icons/lens.svg';
+export { default as Back } from './icons/back.svg';
 export { default as SplashTemporary } from './images/splashtemp.svg';
 export { default as AnniversaryImage } from './images/anniversary.svg';

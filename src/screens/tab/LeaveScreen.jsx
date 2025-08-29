@@ -1,15 +1,25 @@
-import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { CustomHeader, LeaveStats, CustomTable, StatusBadge, LeaveRequestModal } from '../../components'
-import { getDashboardData, getLeaveRequests, createLeaveRequest } from '../../api/apiService'
-import { Lens } from '../../assets'
+import { getDashboardData, getLeaveRequests, createLeaveRequest, updateLeaveRequest, deleteLeaveRequest } from '../../api/apiService'
+import { Lens, CheckPad, Bin } from '../../assets'
 
 const LeaveScreen = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [selectedLeaveRequest, setSelectedLeaveRequest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const fetchLeaveRequests = async () => {
+    try {
+      const data = await getLeaveRequests();
+      setLeaveRequests(data);
+    } catch (err) {
+      setError('Failed to fetch leave requests.');
+    }
+  };
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -22,19 +32,57 @@ const LeaveScreen = () => {
         setLoading(false);
       }
     };
-    const fetchLeaveRequests = async () => {
-      try {
-        const data = await getLeaveRequests();
-        setLeaveRequests(data);
-      } catch (err) {
-        setError('Failed to fetch dashboard data.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    
     fetchLeaveRequests();
     fetchDashboardData();
   }, []);
+
+  const handleDeleteLeave = async (leaveId) => {
+    Alert.alert(
+      'Delete Leave Request',
+      'Are you sure you want to delete this leave request?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteLeaveRequest(leaveId);
+              Alert.alert('Success', 'Leave request deleted successfully');
+              await fetchLeaveRequests(); // Refresh the list
+            } catch (error) {
+              Alert.alert('Error', 'Failed to delete leave request');
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const handleEditLeave = (leaveRequest) => {
+    setSelectedLeaveRequest(leaveRequest);
+    setShowLeaveModal(true);
+  };
+
+  const ActionButtons = ({ row }) => (
+    <View className="flex-row gap-2">
+      <TouchableOpacity
+        onPress={() => handleEditLeave(row)}
+        className="p-1 bg-blue-100 rounded"
+        activeOpacity={0.7}
+      >
+        <CheckPad width={16} height={16} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handleDeleteLeave(row.id)}
+        className="p-1 bg-red-100 rounded"
+        activeOpacity={0.7}
+      >
+        <Bin width={16} height={16} />
+      </TouchableOpacity>
+    </View>
+  );
 
   const columns = [
     {
@@ -48,42 +96,75 @@ const LeaveScreen = () => {
       width: 100,
     },
     {
-      header: 'Duration',
-      key: 'duration',
-      width: 90,
+      header: 'From Date',
+      key: 'from_date',
+      width: 100,
+    },
+    {
+      header: 'To Date',
+      key: 'to_date',
+      width: 100,
     },
     {
       header: 'Days',
-      key: 'days',
-      width: 90,
+      key: 'leave_day_type',
+      width: 80,
     },
     {
       header: 'Reason',
       key: 'reason',
-      width: 100,
+      width: 120,
     },
     {
       header: 'Session',
       key: 'day_session',
-      width: 100,
+      width: 80,
+      render: (row) => (
+        <Text className="text-xs">
+          {row.day_session || 'Full Day'}
+        </Text>
+      ),
     },
     {
       header: 'Status',
       key: 'status',
-      width: 80,
+      width: 90,
       render: (row) => <StatusBadge status={row.status} />,
     },
     {
       header: 'Action',
       key: 'action',
       width: 80,
-      render:  "",
+      render: (row) => <ActionButtons row={row} />,
     },
   ];
 
   const handleLeaveSubmit = async (leaveData) => {
-    const response = await createLeaveRequest(leaveData);
-    await getLeaveRequests();
+    try {
+      if (selectedLeaveRequest) {
+        // Update existing leave request
+        await updateLeaveRequest(selectedLeaveRequest.id, leaveData);
+        Alert.alert('Success', 'Leave request updated successfully');
+      } else {
+        // Create new leave request
+        await createLeaveRequest(leaveData);
+        Alert.alert('Success', 'Leave request created successfully');
+      }
+      
+      // Refresh the leave requests list
+      await fetchLeaveRequests();
+      
+      // Close modal and reset selection
+      setShowLeaveModal(false);
+      setSelectedLeaveRequest(null);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to process leave request');
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowLeaveModal(false);
+    setSelectedLeaveRequest(null);
   };
 
   const SearchBar = () => {
@@ -91,10 +172,12 @@ const LeaveScreen = () => {
 
     const handleSearch = () => {
       console.log('Search pressed:', searchText);
+      // Implement search functionality here
     };
 
     const handleRequestLeave = () => {
-      console.log('Request Leave pressed');
+      setSelectedLeaveRequest(null); // Ensure it's for creating new request
+      setShowLeaveModal(true);
     };
 
     return (
@@ -120,7 +203,7 @@ const LeaveScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-[#002231] px-4 py-2 rounded-md"
-          onPress={()=> setShowLeaveModal(true)}
+          onPress={handleRequestLeave}
           activeOpacity={0.8}
         >
           <Text className="text-white font-medium text-sm">Request Leave</Text>
@@ -144,6 +227,7 @@ const LeaveScreen = () => {
       </View>
     );
   }
+
   return (
     <View className="flex-1 bg-[#F9F9F9]">
       <CustomHeader
@@ -163,14 +247,13 @@ const LeaveScreen = () => {
           data={leaveRequests}
           RightSection={SearchBar}
           scroll={true}
-        // onRowPress={handleRowPress}
-        // containerStyle="mt-4"
         />
       </ScrollView>
       <LeaveRequestModal
         visible={showLeaveModal}
-        onClose={() => setShowLeaveModal(false)}
+        onClose={handleCloseModal}
         onSubmit={handleLeaveSubmit}
+        editData={selectedLeaveRequest} // Pass the selected leave request for editing
       />
     </View>
   )

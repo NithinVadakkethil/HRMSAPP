@@ -40,10 +40,10 @@ const Offboard = ({profileData}) => {
   }
 
   return (
-    <>
+    <View className='flex-1 bg-[#F9F9F9]'>
       <ProfileSection subDetails={false} personalInfo={profileData?.PersonalInfo}/>
       <OnboardingChecklist title={"Offboarding"} info={offboardData}/>
-    </>
+    </View>
   )
 }
 

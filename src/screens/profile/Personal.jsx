@@ -10,7 +10,7 @@ const Personal = ({ profileData }) => {
   }
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-[#F9F9F9]">
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -18,13 +18,15 @@ const Personal = ({ profileData }) => {
       >
         <View className="flex-row items-center justify-end p-5">
           <TouchableOpacity
-            className={`${profileData?.Resignation[0]?.status === "Pending" ? 'bg-[#F97316]' : 'bg-[#007583]'} rounded-md items-center justify-center py-2 px-4`}
+            className={`${profileData?.Resignation[0]?.status === "Pending" ? 'bg-[#F97316]' : profileData?.Resignation[0]?.status === "Approved" ? 'bg-[#22C55E]' : 'bg-[#007583]'} rounded-md items-center justify-center py-2 px-4`}
             onPress={() => setShowResignModal(true)}
             activeOpacity={0.5}
-            disabled={profileData?.Resignation[0]?.status === "Pending"}
+            disabled={profileData?.Resignation[0]?.status === "Pending" || profileData?.Resignation[0]?.status === "Approved"}
           >
             {profileData?.Resignation[0]?.status === "Pending" ? <Text className="text-[#FFF] font-inter text-[12px]">
               Pending
+            </Text> : profileData?.Resignation[0]?.status === "Approved" ? <Text className="text-[#FFF] font-inter text-[12px]">
+              Approved
             </Text> : <Text className="text-[#FFF] font-inter text-[12px]">
               Resignation
             </Text>}

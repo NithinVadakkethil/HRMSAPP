@@ -1,9 +1,11 @@
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { ProfileSection, HeaderText, LeaveStats, SummarySection, Attendance, PerformanceDashboard } from '../../components'
+import { seperatedDateTime } from '../../common'
 import { getDashboardData } from '../../api/apiService'
 
 const AttendanceScreen = ({ profileData }) => {
+  const { date } = seperatedDateTime(new Date());
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,12 +43,12 @@ const AttendanceScreen = ({ profileData }) => {
 
   return (
     <ScrollView
-      className="flex-1"
+      className="flex-1 bg-[#F9F9F9]"
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
       <ProfileSection subDetails={false} personalInfo={profileData?.PersonalInfo} />
-      <HeaderText text={"29 July 2024"} />
+      <HeaderText text={date} />
       <LeaveStats leaveStats={dashboardData}/>
       <SummarySection />
       <Attendance />
