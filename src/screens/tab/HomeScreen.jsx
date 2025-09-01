@@ -1,6 +1,6 @@
 import { View, ScrollView, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader } from '../../components'
+import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../components'
 import { getDashboardData, createLeaveRequest } from '../../api/apiService'
 
 const HomeScreen = () => {
@@ -28,14 +28,6 @@ const HomeScreen = () => {
     const response = await createLeaveRequest(leaveData);
 };
 
-  if (loading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
   if (error) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -43,8 +35,6 @@ const HomeScreen = () => {
       </View>
     );
   }
-
-  console.log("dashboardData--->", dashboardData)
 
   return (
     <View className="flex-1 bg-[#F9F9F9]">
@@ -58,13 +48,19 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        <LeaveStats leaveStats={dashboardData} />
-        <SummarySection />
-        <Attendance />
-        <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
-        <PerformanceDashboard />
-        <UpcomingAnniversary />
-        <UpcomingHolidays holidays={dashboardData?.public_holidays} />
+        {loading ? (
+          <HomeScreenSkeleton />
+        ) : (
+          <>
+            <LeaveStats leaveStats={dashboardData} />
+            <SummarySection />
+            <Attendance />
+            <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
+            <PerformanceDashboard />
+            <UpcomingAnniversary />
+            <UpcomingHolidays holidays={dashboardData?.public_holidays} />
+          </>
+        )}
       </ScrollView>
       <LeaveRequestModal
         visible={showLeaveModal}
