@@ -20,3 +20,13 @@ export { default as Onboard} from './profile/Onboard';
 export { default as PaySlip} from './profile/PaySlip';
 export { default as Personal} from './profile/Personal';
 export { default as ProfileTopTabs} from './profile/ProfileTopTabs';
+
+// Junior Employee Screens
+
+export { default as JnrHomeScreen} from './tab/JnrEmployee/HomeScreen';
+export { default as EmployeeScreen} from './tab/JnrEmployee/EmployeeScreen';
+export { default as JnrInboxScreen} from './tab/JnrEmployee/JnrInboxScreen';
+export { default as JnrNotificationScreen} from './tab/JnrEmployee/JnrNotificationScreen';
+export { default as JnrProfileScreen} from './tab/JnrEmployee/JnrProfileScreen';
+export { default as JnrReportScreen} from './tab/JnrEmployee/JnrReportScreen';
+export { default as JnrLeaveScreen} from './tab/JnrEmployee/JnrLeaveScreen';

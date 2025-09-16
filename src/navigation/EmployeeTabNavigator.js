@@ -12,7 +12,7 @@ import { Home, Leave, Report, Profile } from "../assets";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const EmployeeTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -58,4 +58,4 @@ const TabNavigator = () => {
   );
 };
 
-export default TabNavigator;
+export default EmployeeTabNavigator;

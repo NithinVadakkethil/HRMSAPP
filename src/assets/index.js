@@ -6,7 +6,6 @@ export { default as Bell } from './icons/bell.svg';
 export { default as Search } from './icons/search.svg';
 export { default as Comment } from './icons/comment.svg';
 export { default as BrandLogo } from './icons/brandlogo.svg';
-export { default as SplashImage } from './images/splash.svg';
 export { default as ToatalLeave } from './icons/totalleave.svg';
 export { default as Taken } from './icons/taken.svg';
 export { default as SickLeave } from './icons/sick.svg';
@@ -28,5 +27,13 @@ export { default as Bin } from './icons/bin.svg';
 export { default as CheckPad } from './icons/checkpad.svg';
 export { default as Lens } from './icons/lens.svg';
 export { default as Back } from './icons/back.svg';
+export { default as Employee } from './icons/employee.svg';
+
+
+
+
+
+
+export { default as SplashImage } from './images/splash.svg';
 export { default as SplashTemporary } from './images/splashtemp.svg';
 export { default as AnniversaryImage } from './images/anniversary.svg';

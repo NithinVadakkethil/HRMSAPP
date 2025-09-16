@@ -4,7 +4,6 @@ import {
   SplashScreen,
   LoginScreen,
 } from "../screens";
-import TabNavigator from "./TabNavigator";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +17,6 @@ const AppNavigator = () => {
     >
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="MainTabs" component={TabNavigator} />
     </Stack.Navigator>
   );
 };
