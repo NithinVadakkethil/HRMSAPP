@@ -23,10 +23,10 @@ export { default as ProfileTopTabs} from './profile/ProfileTopTabs';
 
 // Junior Employee Screens
 
-export { default as JnrHomeScreen} from './tab/JnrEmployee/HomeScreen';
-export { default as EmployeeScreen} from './tab/JnrEmployee/EmployeeScreen';
-export { default as JnrInboxScreen} from './tab/JnrEmployee/JnrInboxScreen';
-export { default as JnrNotificationScreen} from './tab/JnrEmployee/JnrNotificationScreen';
-export { default as JnrProfileScreen} from './tab/JnrEmployee/JnrProfileScreen';
-export { default as JnrReportScreen} from './tab/JnrEmployee/JnrReportScreen';
-export { default as JnrLeaveScreen} from './tab/JnrEmployee/JnrLeaveScreen';
+export { default as JnrHomeScreen} from './tab/JnrManager/HomeScreen';
+export { default as EmployeeScreen} from './tab/JnrManager/EmployeeScreen';
+export { default as JnrInboxScreen} from './tab/JnrManager/JnrInboxScreen';
+export { default as JnrNotificationScreen} from './tab/JnrManager/JnrNotificationScreen';
+export { default as JnrProfileScreen} from './tab/JnrManager/JnrProfileScreen';
+export { default as JnrReportScreen} from './tab/JnrManager/JnrReportScreen';
+export { default as JnrLeaveScreen} from './tab/JnrManager/JnrLeaveScreen';
