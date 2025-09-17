@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { CustomHeader, LeaveStats, CustomTable, StatusBadge, LeaveRequestModal } from '../../components'
-import { getDashboardData, getLeaveRequests, createLeaveRequest, updateLeaveRequest, deleteLeaveRequest } from '../../api/apiService'
-import { Lens, CheckPad, Bin } from '../../assets'
+import { CustomHeader, LeaveStats, CustomTable, StatusBadge, LeaveRequestModal } from '../../../components'
+import { getDashboardData, getLeaveRequests, createLeaveRequest, updateLeaveRequest, deleteLeaveRequest } from '../../../api/apiService'
+import { Lens, CheckPad, Bin } from '../../../assets'
 
 const LeaveScreen = () => {
   const [dashboardData, setDashboardData] = useState(null);

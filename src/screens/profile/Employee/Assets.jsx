@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Image } from 'react-native'
 import React from 'react'
-import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../components'
+import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../../components'
 
 const Assets = ({profileData}) => {
   const columns = [

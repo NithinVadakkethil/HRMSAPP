@@ -1,6 +1,6 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Access, Assets, Attendance, ContactMade, Document, Offboard, Onboard, PaySlip, Personal } from '../../screens';
+import { Access, Assets, Attendance, ContactMade, Document, Offboard, Onboard, PaySlip, Personal } from '../..';
 
 const TopTab = createMaterialTopTabNavigator();
 

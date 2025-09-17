@@ -1,8 +1,8 @@
 import { View, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { CustomHeader, Anniversary } from '../../components';
-import ProfileTopTabs from '../profile/ProfileTopTabs';
-import { getUserProfile } from '../../api/apiService';
+import { CustomHeader, Anniversary } from '../../../components';
+import ProfileTopTabs from '../../profile/Employee/ProfileTopTabs';
+import { getUserProfile } from '../../../api/apiService';
 
 const ProfileScreen = () => {
   const [anniversaryPopUp, setAnniversaryPopUp] = useState(false)

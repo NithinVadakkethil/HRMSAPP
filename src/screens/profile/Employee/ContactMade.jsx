@@ -1,9 +1,9 @@
 import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { ContactMadeForm, ProfileSection, CustomTable, StatusBadge } from '../../components'
-import { getContacts, deleteContact } from '../../api/apiService'
-import { formatDateTime, seperatedDateTime } from '../../common'
-import { Calendar, CheckPad, Bin } from '../../assets'
+import { ContactMadeForm, ProfileSection, CustomTable, StatusBadge } from '../../../components'
+import { getContacts, deleteContact } from '../../../api/apiService'
+import { formatDateTime, seperatedDateTime } from '../../../common'
+import { Calendar, CheckPad, Bin } from '../../../assets'
 
 const ContactMade = ({ profileData }) => {
   const { date, time } = seperatedDateTime(new Date());

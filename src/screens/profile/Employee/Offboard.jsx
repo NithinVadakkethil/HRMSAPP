@@ -1,7 +1,7 @@
 import { View, Text, ActivityIndicator } from 'react-native'
 import React, {useState, useEffect} from 'react'
-import { OnboardingChecklist, ProfileSection } from '../../components'
-import { getOffboardingList } from '../../api/apiService'
+import { OnboardingChecklist, ProfileSection } from '../../../components'
+import { getOffboardingList } from '../../../api/apiService'
 
 const Offboard = ({profileData}) => {
   const [loading, setLoading] = useState(true);

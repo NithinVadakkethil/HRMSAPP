@@ -1,6 +1,6 @@
 import { ScrollView, TouchableOpacity, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { PersonalInformationCard, KYCDocuments, ExperienceDetails, BankDetailsCard, EducationQualification, Credentials, ResignationForm } from '../../components'
+import { PersonalInformationCard, KYCDocuments, ExperienceDetails, BankDetailsCard, EducationQualification, Credentials, ResignationForm } from '../../../components'
 
 const Personal = ({ profileData }) => {
   const [showResignModal, setShowResignModal] = useState(false)

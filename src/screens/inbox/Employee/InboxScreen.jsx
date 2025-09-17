@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { CustomHeader } from '../../components';
-import InboxTopTabs from '../inbox/InboxTopTabs';
+import { CustomHeader } from '../../../components';
+import InboxTopTabs from './InboxTopTabs';
 
 const InboxScreen = () => {
   return (

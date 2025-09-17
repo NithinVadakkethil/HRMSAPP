@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { ProfileSection, HeaderText, LeaveStats, SummarySection, Attendance, PerformanceDashboard } from '../../components'
-import { seperatedDateTime } from '../../common'
-import { getDashboardData } from '../../api/apiService'
+import { ProfileSection, HeaderText, LeaveStats, SummarySection, Attendance, PerformanceDashboard } from '../../../components'
+import { seperatedDateTime } from '../../../common'
+import { getDashboardData } from '../../../api/apiService'
 
 const AttendanceScreen = ({ profileData }) => {
   const { date } = seperatedDateTime(new Date());

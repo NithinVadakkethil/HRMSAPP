@@ -1,7 +1,7 @@
 import { View, ScrollView, Text } from 'react-native'
 import React from 'react'
-import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../components'
-import { formatDate } from '../../common'
+import { ProfileSection, HeaderText, CustomTable, StatusBadge } from '../../../components'
+import { formatDate } from '../../../common'
 
 const Access = ({profileData}) => {
   const columns = [

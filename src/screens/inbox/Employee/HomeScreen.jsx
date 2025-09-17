@@ -1,7 +1,7 @@
 import { View, ScrollView, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../components'
-import { getDashboardData, createLeaveRequest } from '../../api/apiService'
+import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../../components'
+import { getDashboardData, createLeaveRequest } from '../../../api/apiService'
 
 const HomeScreen = () => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);

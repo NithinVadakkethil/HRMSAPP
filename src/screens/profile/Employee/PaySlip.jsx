@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import { PayslipHeader, PayslipSection, PayslipTable, PayslipFooter } from '../../components';
+import { PayslipHeader, PayslipSection, PayslipTable, PayslipFooter } from '../../../components';
 
 const PaySlip = () => {
   const employeeDetails = [

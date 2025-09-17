@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { OnboardingChecklist, ProfileSection } from '../../components'
+import { OnboardingChecklist, ProfileSection } from '../../../components'
 
 const Onboard = ({profileData}) => {
   return (

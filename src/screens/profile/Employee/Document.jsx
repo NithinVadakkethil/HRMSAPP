@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Alert, Platform, PermissionsAndroid } from 'react-native';
-import { DocumentViewer, DocumentRow, ProfileSection } from '../../components';
+import { DocumentViewer, DocumentRow, ProfileSection } from '../../../components';
 import RNFetchBlob from 'react-native-blob-util';
 
 const Document = ({ profileData }) => {

@@ -1,6 +1,5 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import { MessageList } from '../../components'
+import { MessageList } from '../../../components'
 
 const All = () => {
     return (
