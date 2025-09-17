@@ -44,8 +44,6 @@ const ProfileScreen = () => {
     );
   }
 
-  console.log("profileData--->", profileData)
-
   return (
     <View className='flex-1'>
       <CustomHeader

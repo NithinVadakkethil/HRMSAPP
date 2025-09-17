@@ -53,7 +53,6 @@ const HomeScreen = () => {
         ) : (
           <>
             <LeaveStats leaveStats={dashboardData} />
-            <SummarySection />
             <Attendance />
             <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
             <PerformanceDashboard />

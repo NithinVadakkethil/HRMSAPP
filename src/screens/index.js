@@ -39,3 +39,15 @@ export { default as JnrNotificationScreen} from './tab/JnrManager/JnrNotificatio
 export { default as JnrProfileScreen} from './tab/JnrManager/JnrProfileScreen';
 export { default as JnrReportScreen} from './tab/JnrManager/JnrReportScreen';
 export { default as JnrLeaveScreen} from './tab/JnrManager/JnrLeaveScreen';
+
+// Junior Manager Profile Screens
+
+export { default as JnrAccess } from './profile/JnrManager/Access';
+export { default as JnrAssets } from './profile/JnrManager/Assets';
+export { default as JnrAttendance} from './profile/JnrManager/AttendanceScreen';
+export { default as JnrDocument} from './profile/JnrManager/Document';
+export { default as JnrOffboard} from './profile/JnrManager/Offboard';
+export { default as JnrOnboard} from './profile/JnrManager/Onboard';
+export { default as JnrPaySlip} from './profile/JnrManager/PaySlip';
+export { default as JnrPersonal} from './profile/JnrManager/Personal';
+export { default as JnrProfileTopTabs} from './profile/JnrManager/ProfileTopTabs';
