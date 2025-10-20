@@ -1,7 +1,7 @@
 import { View, ScrollView, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../../components'
-import { getDashboardData, createLeaveRequest } from '../../../api/apiService'
+import { getJMDashboardData, createLeaveRequest } from '../../../api/apiService'
 
 const HomeScreen = () => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
@@ -12,7 +12,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const data = await getDashboardData();
+        const data = await getJMDashboardData();
         setDashboardData(data);
       } catch (err) {
         setError('Failed to fetch dashboard data.');

@@ -28,11 +28,10 @@ export { default as CheckPad } from './icons/checkpad.svg';
 export { default as Lens } from './icons/lens.svg';
 export { default as Back } from './icons/back.svg';
 export { default as Employee } from './icons/employee.svg';
+export { default as Phone } from './icons/phone.svg';
+export { default as User } from './icons/user.svg';
 
-
-
-
-
+//Images
 
 export { default as SplashImage } from './images/splash.svg';
 export { default as SplashTemporary } from './images/splashtemp.svg';

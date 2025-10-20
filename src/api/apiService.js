@@ -139,7 +139,6 @@ export const getUserProfile = async () => {
  * @returns {Promise<object>} The response data from the server.
  */
 export const createResignation = async (resignationData) => {
-  console.log("resignationData-->", resignationData)
   try {
     const response = await apiClient.post('/hrms/resignation/post/', resignationData);
     return response.data;
@@ -215,5 +214,50 @@ export const deleteContact = async (contactId) => {
     } else {
       throw new Error(`Request Error: ${error.message}`);
     }
+  }
+};
+
+//Junior Manager
+
+export const getJMDashboardData = async () => {
+  try {
+    const response = await apiClient.get('/hrms/dashboard/junior-manager/');
+    // The actual data is nested in the response.
+    return response.data.results.data;
+  } catch (error) {
+    // Log the error for debugging purposes.
+    console.error('Error fetching dashboard data:', error);
+    // Re-throw the error to be handled by the calling component.
+    throw error;
+  }
+};
+
+/**
+ * Fetches the user's profile data.
+ * @returns {Promise<object>} The user's profile data.
+ */
+export const getEmployeesUnderJM = async () => {
+  try {
+    const response = await apiClient.get('/hrms/employee/under/jm/');
+    // The profile data is the first element in the 'data' array.
+    return response.data.results.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the user's profile data.
+ * @returns {Promise<object>} The user's profile data.
+ */
+export const getEmployeeDetails = async (id) => {
+  try {
+    const response = await apiClient.get(`/hrms/user/detail/${id}/`);
+    // The profile data is the first element in the 'data' array.
+    return response.data.results.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
   }
 };

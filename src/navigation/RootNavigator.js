@@ -17,8 +17,7 @@ const AppStack = () => {
   // Handle numeric usertype from your API response
   switch (user?.usertype) {
     case 4: // Employee
-      // return <EmployeeTabNavigator />;
-      return <JnrManagerTabNavigator />;
+      return <EmployeeTabNavigator />;
     case 5: // Junior Manager
       return <JnrManagerTabNavigator />;
     case 3: // Senior Manager

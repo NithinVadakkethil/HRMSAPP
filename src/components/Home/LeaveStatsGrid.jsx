@@ -21,13 +21,13 @@ const LeaveStatsGrid = ({ leaveStats }) => {
       id: 3,
       IconComponent: Casual,
       label: "Casual Leave",
-      value: leaveStats?.leave_summary["Casual Leave"]?.remaining || "0"
+      value: leaveStats?.leave_summary && leaveStats?.leave_summary["Casual Leave"]?.remaining || "0"
     },
     {
       id: 4,
       IconComponent: SickLeave,
       label: "Sick Leave",
-      value: leaveStats?.leave_summary["Sick leave"]?.remaining || "0"
+      value: leaveStats?.leave_summary && leaveStats?.leave_summary["Sick leave"]?.remaining || "0"
     },
     {
       id: 5,
