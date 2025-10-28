@@ -28,14 +28,6 @@ const HomeScreen = () => {
     const response = await createLeaveRequest(leaveData);
   };
 
-  if (error) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text>{error}</Text>
-      </View>
-    );
-  }
-
   return (
     <View className="flex-1 bg-[#F9F9F9]">
       <CustomHeader
@@ -43,30 +35,35 @@ const HomeScreen = () => {
         showNotificationButton={true}
         showBackButton={true}
       />
-      <ScrollView
-        className="flex-1"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {loading ? (
-          <HomeScreenSkeleton />
-        ) : (
-          <>
-            <LeaveStats leaveStats={dashboardData} />
-            <SummarySection />
-            <Attendance tableTitle={"Attendance Overview"} />
-            <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
-            <PerformanceDashboard />
-            <UpcomingAnniversary />
-            <UpcomingHolidays holidays={dashboardData?.public_holidays} />
-          </>
-        )}
-      </ScrollView>
-      <LeaveRequestModal
-        visible={showLeaveModal}
-        onClose={() => setShowLeaveModal(false)}
-        onSubmit={handleLeaveSubmit}
-      />
+      {error ? <View className="flex-1 justify-center items-center">
+        <Text>{error}</Text>
+      </View> : <>
+        <ScrollView
+          className="flex-1"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
+          {loading ? (
+            <HomeScreenSkeleton />
+          ) : (
+            <>
+              <LeaveStats leaveStats={dashboardData} />
+              <SummarySection />
+              <Attendance tableTitle={"Attendance Overview"} />
+              <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
+              <PerformanceDashboard />
+              <UpcomingAnniversary />
+              <UpcomingHolidays holidays={dashboardData?.public_holidays} />
+            </>
+          )}
+        </ScrollView>
+        <LeaveRequestModal
+          visible={showLeaveModal}
+          onClose={() => setShowLeaveModal(false)}
+          onSubmit={handleLeaveSubmit}
+        />
+      </>}
+
     </View>
   )
 }

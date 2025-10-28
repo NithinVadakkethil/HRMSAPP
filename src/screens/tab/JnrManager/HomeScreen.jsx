@@ -1,38 +1,47 @@
 import { View, ScrollView, ActivityIndicator, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Lens, CalendarIcon } from '../../../assets'
-import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../../components'
+import {
+  LeaveStats,
+  UpcomingHolidays,
+  Attendance,
+  Calendar,
+  PerformanceDashboard,
+  LeaveRequestModal,
+  UpcomingAnniversary,
+  CustomHeader,
+  HomeScreenSkeleton,
+  SearchBar
+} from '../../../components'
 import { getJMDashboardData, getEmployeeAttendance, createLeaveRequest } from '../../../api/apiService'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const HomeScreen = () => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [dashboardData, setDashboardData] = useState(null);
-  const [employeeAttendance, setEmployeeAttendance] = useState([])
+  const [employeeAttendance, setEmployeeAttendance] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [searchText, setSearchText] = useState('');
+  const [shopId, setShopId] = useState(null);
 
+  // 🔹 Fetch dashboard first, then attendance for the dashboard date
   useEffect(() => {
-    let shopId = null;
-
     const fetchDashboardData = async () => {
       try {
         const data = await getJMDashboardData();
-        shopId = data?.shop_details?.shop_id;
+        const shop_id = data?.shop_details?.shop_id;
+        setShopId(shop_id);
         setDashboardData(data);
 
-        // Convert date from API format
-        const apiDate = data?.date; // e.g. "Tuesday 28 October 2025"
-        if (apiDate && shopId) {
-          const formattedDate = convertApiDate(apiDate);
-          const attendancePayload = {
-            from_date: `${formattedDate} 00:00`,
-            to_date: `${formattedDate} 23:59`,
-            shop_id: shopId,
-          };
+        // Convert API date "Tuesday 28 October 2025" → JS Date
+        const initialDate = convertApiDateToJS(data?.today);
+        setSelectedDate(initialDate);
 
-          await fetchEmployeeAttendance(attendancePayload);
-        }
-
+        // Fetch attendance for the initial date
+        await fetchEmployeeAttendanceForDate(initialDate, shop_id);
       } catch (err) {
         console.error(err);
         setError('Failed to fetch dashboard data.');
@@ -41,102 +50,111 @@ const HomeScreen = () => {
       }
     };
 
-    const fetchEmployeeAttendance = async (payload) => {
-      try {
-        const data = await getEmployeeAttendance(payload);
-        setEmployeeAttendance(data);
-      } catch (err) {
-        console.error(err);
-        setError('Failed to fetch attendance data.');
-      }
-    };
-
-    // Helper function to convert "Tuesday 28 October 2025" → "2025/10/28"
-    const convertApiDate = (apiDate) => {
-      try {
-        const parts = apiDate.split(' ');
-        const day = parts[1];
-        const monthName = parts[2];
-        const year = parts[3];
-
-        const months = {
-          January: '01',
-          February: '02',
-          March: '03',
-          April: '04',
-          May: '05',
-          June: '06',
-          July: '07',
-          August: '08',
-          September: '09',
-          October: '10',
-          November: '11',
-          December: '12',
-        };
-
-        const month = months[monthName];
-        return `${year}/${month}/${day.padStart(2, '0')}`;
-      } catch (err) {
-        console.error('Date conversion failed:', err);
-        return '';
-      }
-    };
-
     fetchDashboardData();
   }, []);
 
-  const handleLeaveSubmit = async (leaveData) => {
-    const response = await createLeaveRequest(leaveData);
+  // 🔹 Fetch attendance when user selects a new date
+  useEffect(() => {
+    if (selectedDate && shopId) {
+      fetchEmployeeAttendanceForDate(selectedDate, shopId);
+    }
+  }, [selectedDate]);
+
+  const fetchEmployeeAttendanceForDate = async (dateObj, shopId) => {
+    try {
+      setLoading(true);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const formattedDate = `${year}/${month}/${day}`;
+
+      const payload = {
+        from_date: `${formattedDate} 00:00`,
+        to_date: `${formattedDate} 23:59`,
+        shop_id: shopId,
+      };
+
+      const data = await getEmployeeAttendance(payload);
+      setEmployeeAttendance(data);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch attendance data.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const SearchBar = () => {
-    const [searchText, setSearchText] = useState('');
+  const convertApiDateToJS = (apiDate) => {
+    if (!apiDate) return new Date();
+    const parts = apiDate.split(' '); // e.g. ['Tuesday','28','October','2025']
+    const day = parseInt(parts[1], 10);
+    const monthName = parts[2];
+    const year = parseInt(parts[3], 10);
 
-    const handleSearch = () => {
-      console.log('Search pressed:', searchText);
-      // Implement search functionality here
+    const months = {
+      January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+      July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
     };
 
-    // const handleRequestLeave = () => {
-    //   setSelectedLeaveRequest(null); // Ensure it's for creating new request
-    //   setShowLeaveModal(true);
-    // };
+    const month = months[monthName] ?? 0;
+    return new Date(year, month, day);
+  };
 
-    return (
-      <View className="flex-1 flex-row items-center px-3 py-2 gap-3">
-        <View className='flex-row items-center justify-between w-48 rounded-lg shadow-sm border border-gray-200 px-2 py-0.5 gap-1'>
-          <Lens />
-          <TextInput
-            className="flex-1 text-gray-700 text-base m-0 p-0"
-            placeholder="Search"
-            placeholderTextColor="#9CA3AF"
-            value={searchText}
-            onChangeText={setSearchText}
-            onSubmitEditing={handleSearch}
-            returnKeyType="search"
-          />
-        </View>
-        <TouchableOpacity
-          className="bg-[#2A8E9E] px-4 py-2 rounded-md"
-          onPress={handleSearch}
-          activeOpacity={0.8}
-        >
-          <Text className="text-white font-medium text-sm">Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="gap-1 bg-[#FFFFFF] rounded-md p-2 flex-row items-center border border-[#374151]">
-          <CalendarIcon />
-          <Text className="text-[#374151] font-inter text-[12px]">28 Oct 2025</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="bg-[#002231] px-4 py-2 rounded-md"
-          // onPress={handleRequestLeave}
-          activeOpacity={0.8}
-        >
-          <Text className="text-white font-medium text-sm">Export</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+  const handleLeaveSubmit = async (leaveData) => {
+    await createLeaveRequest(leaveData);
+  };
+
+  const handleDateChange = (event, newSelectedDate) => {
+    setShowDatePicker(false);
+    if (newSelectedDate) setSelectedDate(newSelectedDate);
+  };
+
+  // const SearchBar = () => {
+  //   const handleSearch = () => {
+  //     // No API call needed — filtering happens locally
+  //   };
+
+  //   return (
+  //     <View className="flex-1 flex-row items-center px-3 py-2 gap-3">
+  //       <View className='flex-row items-center justify-between w-48 rounded-lg shadow-sm border border-gray-200 px-2 py-0.5 gap-1'>
+  //         <Lens />
+  //         <TextInput
+  //           className="flex-1 text-gray-700 text-base m-0 p-0"
+  //           placeholder="Search"
+  //           placeholderTextColor="#9CA3AF"
+  //           value={searchText}
+  //           onChangeText={setSearchText}
+  //           onSubmitEditing={handleSearch}
+  //           returnKeyType="search"
+  //         />
+  //       </View>
+  //       <TouchableOpacity
+  //         className="bg-[#2A8E9E] px-4 py-2 rounded-md"
+  //         onPress={handleSearch}
+  //         activeOpacity={0.8}
+  //       >
+  //         <Text className="text-white font-medium text-sm">Search</Text>
+  //       </TouchableOpacity>
+  //       <TouchableOpacity 
+  //         className="gap-1 bg-[#FFFFFF] rounded-md p-2 flex-row items-center border border-[#374151]" 
+  //         onPress={() => setShowDatePicker(true)}
+  //       >
+  //         <CalendarIcon />
+  //         <Text className="text-[#374151] font-inter text-[12px]">
+  //           {selectedDate
+  //             ? selectedDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  //             : 'Select Date'}
+  //         </Text>
+  //       </TouchableOpacity>
+  //       <TouchableOpacity
+  //         className="bg-[#002231] px-4 py-2 rounded-md"
+  //         activeOpacity={0.8}
+  //       >
+  //         <Text className="text-white font-medium text-sm">Export</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   if (error) {
     return (
@@ -145,6 +163,11 @@ const HomeScreen = () => {
       </View>
     );
   }
+
+  // 🔹 Filter employees locally by name
+  const filteredAttendance = employeeAttendance?.filter(item =>
+    item?.user?.employee_name?.toLowerCase()?.includes(searchText?.toLowerCase())
+  );
 
   return (
     <View className="flex-1 bg-[#F9F9F9]">
@@ -163,7 +186,20 @@ const HomeScreen = () => {
         ) : (
           <>
             <LeaveStats leaveStats={dashboardData} />
-            <Attendance tableTitle={"Employee Attendance"} attendanceData={employeeAttendance} RightSection={SearchBar} scroll={true}/>
+            <Attendance
+              tableTitle={"Employee Attendance"}
+              attendanceData={filteredAttendance}
+              RightSection={() => (
+                <SearchBar
+                  searchText={searchText}
+                  setSearchText={setSearchText}
+                  onSearch={() => { }}
+                  selectedDate={selectedDate}
+                  onDatePress={() => setShowDatePicker(true)}
+                />
+              )}
+              scroll={true}
+            />
             <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
             <PerformanceDashboard />
             <UpcomingAnniversary />
@@ -171,13 +207,25 @@ const HomeScreen = () => {
           </>
         )}
       </ScrollView>
+
       <LeaveRequestModal
         visible={showLeaveModal}
         onClose={() => setShowLeaveModal(false)}
         onSubmit={handleLeaveSubmit}
       />
-    </View>
-  )
-}
 
-export default HomeScreen
+      {showDatePicker && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={selectedDate || new Date()}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
+    </View>
+  );
+};
+
+export default HomeScreen;
