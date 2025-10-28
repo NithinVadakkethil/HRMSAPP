@@ -76,6 +76,8 @@ const Attendance = (props) => {
         columns={columns}
         data={formattedData}
         onRowPress={handleRowPress}
+        RightSection={props.RightSection}
+        scroll={props.scroll}
       />
     </View>
   );

@@ -1,5 +1,6 @@
-import { View, ScrollView, ActivityIndicator, Text } from 'react-native'
+import { View, ScrollView, ActivityIndicator, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { Lens, CalendarIcon } from '../../../assets'
 import { LeaveStats, SummarySection, UpcomingHolidays, Attendance, Calendar, PerformanceDashboard, LeaveRequestModal, UpcomingAnniversary, CustomHeader, HomeScreenSkeleton } from '../../../components'
 import { getJMDashboardData, getEmployeeAttendance, createLeaveRequest } from '../../../api/apiService'
 
@@ -88,6 +89,55 @@ const HomeScreen = () => {
     const response = await createLeaveRequest(leaveData);
   };
 
+  const SearchBar = () => {
+    const [searchText, setSearchText] = useState('');
+
+    const handleSearch = () => {
+      console.log('Search pressed:', searchText);
+      // Implement search functionality here
+    };
+
+    // const handleRequestLeave = () => {
+    //   setSelectedLeaveRequest(null); // Ensure it's for creating new request
+    //   setShowLeaveModal(true);
+    // };
+
+    return (
+      <View className="flex-1 flex-row items-center px-3 py-2 gap-3">
+        <View className='flex-row items-center justify-between w-48 rounded-lg shadow-sm border border-gray-200 px-2 py-0.5 gap-1'>
+          <Lens />
+          <TextInput
+            className="flex-1 text-gray-700 text-base m-0 p-0"
+            placeholder="Search"
+            placeholderTextColor="#9CA3AF"
+            value={searchText}
+            onChangeText={setSearchText}
+            onSubmitEditing={handleSearch}
+            returnKeyType="search"
+          />
+        </View>
+        <TouchableOpacity
+          className="bg-[#2A8E9E] px-4 py-2 rounded-md"
+          onPress={handleSearch}
+          activeOpacity={0.8}
+        >
+          <Text className="text-white font-medium text-sm">Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="gap-1 bg-[#FFFFFF] rounded-md p-2 flex-row items-center border border-[#374151]">
+          <CalendarIcon />
+          <Text className="text-[#374151] font-inter text-[12px]">28 Oct 2025</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="bg-[#002231] px-4 py-2 rounded-md"
+          // onPress={handleRequestLeave}
+          activeOpacity={0.8}
+        >
+          <Text className="text-white font-medium text-sm">Export</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   if (error) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -113,7 +163,7 @@ const HomeScreen = () => {
         ) : (
           <>
             <LeaveStats leaveStats={dashboardData} />
-            <Attendance tableTitle={"Employee Attendance"} attendanceData={employeeAttendance}/>
+            <Attendance tableTitle={"Employee Attendance"} attendanceData={employeeAttendance} RightSection={SearchBar} scroll={true}/>
             <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
             <PerformanceDashboard />
             <UpcomingAnniversary />

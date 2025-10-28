@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { ContactMadeForm, ProfileSection, CustomTable, StatusBadge } from '../../../components'
 import { getContacts, deleteContact } from '../../../api/apiService'
 import { formatDateTime, seperatedDateTime } from '../../../common'
-import { Calendar, CheckPad, Bin } from '../../../assets'
+import { CalendarIcon, CheckPad, Bin } from '../../../assets'
 
 const ContactMade = ({ profileData }) => {
   const { date, time } = seperatedDateTime(new Date());
@@ -172,7 +172,7 @@ const ContactMade = ({ profileData }) => {
           <Text className="text-white font-inter text-[12px]">Create</Text>
         </TouchableOpacity>
         <TouchableOpacity className="gap-1 bg-[#FFFFFF] rounded-md p-2 flex-row items-center border border-[#374151]">
-          <Calendar />
+          <CalendarIcon />
           <Text className="text-[#374151] font-inter text-[12px]">{date}</Text>
         </TouchableOpacity>
       </View>

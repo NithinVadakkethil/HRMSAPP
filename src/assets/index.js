@@ -20,7 +20,7 @@ export { default as ImageAvatar } from './icons/imageavatar.svg';
 export { default as Pdf } from './icons/pdf.svg';
 export { default as ImageViewer } from './icons/viewimage.svg';
 export { default as Close } from './icons/close.svg';
-export { default as Calendar } from './icons/calendar.svg';
+export { default as CalendarIcon } from './icons/calendar.svg';
 export { default as DateCalendar } from './icons/date.svg';
 export { default as Logout } from './icons/logout.svg';
 export { default as Bin } from './icons/bin.svg';
