@@ -40,4 +40,5 @@ export { default as ContactMadeForm } from './ContactMadeForm/ContactMadeForm';
 export { default as Anniversary } from './Home/Anniversary';
 export { default as HomeScreenSkeleton } from './Skeletons/HomeScreenSkeleton';
 export { default as EmployeeCard } from './Employee/EmployeeCard';
+export { default as SearchBar } from './Common/SearchBar';
 
