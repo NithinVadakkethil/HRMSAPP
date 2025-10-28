@@ -69,7 +69,7 @@ const ProfileTopTabs = (props) => {
       />
       <TopTab.Screen
         name="Onboard"
-        component={() => <Onboard profileData={props.profileData} />}
+        component={() => <Onboard profileData={props?.profileData} />}
         options={{ tabBarLabel: 'Onboarding' }}
       />
       <TopTab.Screen

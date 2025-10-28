@@ -40,7 +40,11 @@ const EmployeeScreen = () => {
   }, []);
 
   const handleViewProfile = (employeeId) => {
-    navigation.navigate('EmployeeProfile', { id: employeeId });
+    navigation.navigate({
+      name: 'Profile',
+      params: { id: employeeId },
+      key: `Profile-${employeeId}` // 🔥 ensures a new instance
+    });    
   };
 
   const SearchBar = () => {
@@ -111,7 +115,7 @@ const EmployeeScreen = () => {
         renderItem={({ item }) => (
           <EmployeeCard
             employee={item}
-            onViewProfile={handleViewProfile}
+            onViewProfile={()=> handleViewProfile(item.id)}
           />
         )}
         contentContainerStyle={{ paddingBottom: 20 }}

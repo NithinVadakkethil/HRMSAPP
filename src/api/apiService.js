@@ -255,7 +255,24 @@ export const getEmployeeDetails = async (id) => {
   try {
     const response = await apiClient.get(`/hrms/user/detail/${id}/`);
     // The profile data is the first element in the 'data' array.
-    return response.data.results.data;
+    return response.data.results.data[0];
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the user's profile data.
+ * @returns {Promise<object>} The employee's attendance under Jm.
+ */
+export const getEmployeeAttendance = async (payloads) => {
+  console.log("payloads-->", payloads)
+  try {
+    const response = await apiClient.post("/hrms/get-logs/", payloads);
+    console.log("response-->", response)
+    // The profile data is the first element in the 'data' array.
+    return response?.data?.results?.data;
   } catch (error) {
     console.error('Error fetching user profile:', error);
     throw error;

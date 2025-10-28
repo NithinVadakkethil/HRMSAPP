@@ -49,7 +49,7 @@ const CustomTable = ({
 
                     {/* Table Body */}
                     <View className="">
-                        {data.map((row, rowIndex) => (
+                        {data?.map((row, rowIndex) => (
                             <TouchableOpacity
                                 key={rowIndex}
                                 onPress={() => onRowPress && onRowPress(row)}

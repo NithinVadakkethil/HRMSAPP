@@ -2,9 +2,10 @@ import { View, ActivityIndicator, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { CustomHeader, Anniversary } from '../../../components';
 import ProfileTopTabs from '../../profile/JnrManager/ProfileTopTabs';
-import { getUserProfile } from '../../../api/apiService';
+import { getUserProfile, getEmployeeDetails } from '../../../api/apiService';
 
-const JnrProfileScreen = () => {
+const JnrProfileScreen = ({ route }) => {
+  const id = route?.params?.id ?? null; // safer way to read id
   const [anniversaryPopUp, setAnniversaryPopUp] = useState(false)
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const JnrProfileScreen = () => {
     const fetchUserProfile = async () => {
       try {
         const data = await getUserProfile();
-        if(data?.work_anniversary_message){
+        if (data?.work_anniversary_message) {
           setAnniversaryPopUp(true)
         }
         setProfileData(data);
@@ -25,8 +26,23 @@ const JnrProfileScreen = () => {
       }
     };
 
-    fetchUserProfile();
-  }, []);
+    const fetchEmployeeProfile = async (id) => {
+      try {
+        const data = await getEmployeeDetails(id);
+        setProfileData(data);
+      } catch (err) {
+        setError('Failed to fetch profile data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if(id){
+      fetchEmployeeProfile(id)
+    } else {
+      fetchUserProfile();
+    }
+  }, [id]);
 
   if (loading) {
     return (
@@ -44,10 +60,12 @@ const JnrProfileScreen = () => {
     );
   }
 
+  console.log("profileData--->", profileData)
+
   return (
     <View className='flex-1'>
       <CustomHeader
-        title="Employee Profile"
+        title={id ? "Employee Profile" : "Junior Manager Profile"}
         logo={false}
       />
       <ProfileTopTabs profileData={profileData} />
@@ -57,3 +75,4 @@ const JnrProfileScreen = () => {
 }
 
 export default JnrProfileScreen
+

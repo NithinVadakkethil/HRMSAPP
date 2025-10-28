@@ -26,7 +26,7 @@ const HomeScreen = () => {
 
   const handleLeaveSubmit = async (leaveData) => {
     const response = await createLeaveRequest(leaveData);
-};
+  };
 
   if (error) {
     return (
@@ -54,7 +54,7 @@ const HomeScreen = () => {
           <>
             <LeaveStats leaveStats={dashboardData} />
             <SummarySection />
-            <Attendance />
+            <Attendance tableTitle={"Attendance Overview"} />
             <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
             <PerformanceDashboard />
             <UpcomingAnniversary />

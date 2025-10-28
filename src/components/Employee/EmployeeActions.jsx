@@ -3,13 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { User, Phone } from '../../assets';
 
 
-const EmployeeActions = () => {
+const EmployeeActions = ({onViewProfile}) => {
   const handleCall = () => {
     console.log('Call pressed');
-  };
-
-  const handleViewProfile = () => {
-    console.log('View Profile pressed');
   };
 
   return (
@@ -26,7 +22,7 @@ const EmployeeActions = () => {
       
       <TouchableOpacity
         className="flex-row items-center justify-center bg-[#2A8E9E] rounded-lg py-3 px-6 flex-1"
-        onPress={handleViewProfile}
+        onPress={onViewProfile}
       >
         <User size={20} strokeWidth={2.5} />
         <Text className="text-white font-semibold text-base ml-2">

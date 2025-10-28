@@ -18,7 +18,7 @@ const ProfileSection = (props) => {
           <Text className="text-base font-bold text-gray-900">{personalInfo?.name}</Text>
           <StatusChip text={personalInfo?.employee_id} />
         </View>
-        <Text className="text-gray-600 text-sm mb-1">{personalInfo?.designation_name} | {personalInfo?.location}</Text>
+        <Text className="text-gray-600 text-sm mb-1">{personalInfo?.designation_name || personalInfo?.usertype_display} | {personalInfo?.division_name}</Text>
         {props.subDetails && <>
           <Text className="text-gray-500 text-xs mb-1">ESSL ID: {personalInfo?.essl_id}</Text>
           <Text className="text-gray-500 text-xs">Joining Date : {personalInfo?.joining_date}</Text>

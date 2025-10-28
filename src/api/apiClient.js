@@ -5,8 +5,8 @@ import { getAuthToken } from './auth'; // Assuming you have a function to get th
 // For local development, you might use 'http://127.0.0.1:8000'.
 
 const apiClient = axios.create({
-  baseURL: 'https://swahrmanagerapi.zinfog.in', //Development
-  // baseURL: 'https://hrmsapi.swadiamonds.com', //Production
+  // baseURL: 'https://swahrmanagerapi.zinfog.in', //Development
+  baseURL: 'https://hrmsapi.swadiamonds.com', //Production
   headers: {
     'Content-Type': 'application/json',
   },
