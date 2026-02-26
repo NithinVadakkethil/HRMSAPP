@@ -1,4 +1,3 @@
-// --- SearchBar.js ---
 import React from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Lens, CalendarIcon } from '../../assets';

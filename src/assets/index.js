@@ -30,6 +30,7 @@ export { default as Back } from './icons/back.svg';
 export { default as Employee } from './icons/employee.svg';
 export { default as Phone } from './icons/phone.svg';
 export { default as User } from './icons/user.svg';
+export { default as CalendarBlack } from './icons/blackcalendar.svg';
 
 //Images
 

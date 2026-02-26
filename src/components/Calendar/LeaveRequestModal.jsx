@@ -11,9 +11,10 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { DateCalendar, Close } from '../../assets';
+import { getLeaveTypes } from '../../api/apiService';
 
 const LeaveRequestModal = ({ visible, onClose, onSubmit, editData }) => {
-  const [leaveType, setLeaveType] = useState('1');
+  const [leaveType, setLeaveType] = useState('');
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [showFromDatePicker, setShowFromDatePicker] = useState(false);
@@ -22,6 +23,27 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit, editData }) => {
   const [halfDayPeriod, setHalfDayPeriod] = useState('Morning');
   const [description, setDescription] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leaveTypes, setLeaveTypes] = useState([]);
+
+  useEffect(() => {
+    const fetchLeaveTypes = async () => {
+      try {
+        const data = await getLeaveTypes();
+        setLeaveTypes(data);
+        // Set default leave type to first available type if not set
+      if (data.length > 0 && !leaveType) {
+        setLeaveType(data[0].id.toString());
+      }
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch Leave types data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeaveTypes();
+  }, []);
 
   // Populate form when editData is provided
   useEffect(() => {
@@ -154,14 +176,27 @@ const LeaveRequestModal = ({ visible, onClose, onSubmit, editData }) => {
                 borderRadius: 8,
                 backgroundColor: 'white'
               }}>
-                <Picker
+                {/* <Picker
                   selectedValue={leaveType}
                   onValueChange={(itemValue) => setLeaveType(itemValue)}
                   style={{ height: 50 }}
                 >
                   <Picker.Item label="Casual Leave" value="1" />
                   <Picker.Item label="Sick Leave" value="2" />
-                </Picker>
+                </Picker> */}
+                <Picker
+                    selectedValue={leaveType}
+                    onValueChange={(itemValue) => setLeaveType(itemValue)}
+                    style={{ height: 50 }}
+                  >
+                    {leaveTypes.map((type) => (
+                      <Picker.Item 
+                        key={type.id}
+                        label={`${type.type} (${type.no_of_leave} days)`}
+                        value={type.id.toString()}
+                      />
+                    ))}
+                  </Picker>
               </View>
             </View>
 

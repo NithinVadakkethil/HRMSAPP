@@ -267,14 +267,71 @@ export const getEmployeeDetails = async (id) => {
  * @returns {Promise<object>} The employee's attendance under Jm.
  */
 export const getEmployeeAttendance = async (payloads) => {
-  console.log("payloads-->", payloads)
   try {
     const response = await apiClient.post("/hrms/get-logs/", payloads);
-    console.log("response-->", response)
     // The profile data is the first element in the 'data' array.
     return response?.data?.results?.data;
   } catch (error) {
     console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the Jm's Leave Request data.
+ * @returns {Promise<object>} The user's profile data.
+ */
+export const getEmployeeLeaveRequests = async (type) => {
+  try {
+    const response = await apiClient.get(`/hrms/leave/request/jm/?Status=${type}`);
+    return response.data.results?.data || [];
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the Jm's Leave Request data.
+ * @returns {Promise<object>} The user's profile data.
+ */
+export const getJmLeaveRequests = async () => {
+  try {
+    const response = await apiClient.get("/hrms/leave/request/");
+    // The profile data is the first element in the 'data' array.
+    return response.data.results.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Fetches the Jm's Leave Request data.
+ * @returns {Promise<object>} The user's profile data.
+ */
+export const getLeaveTypes = async () => {
+  try {
+    const response = await apiClient.get("/hrms/list/leavetype/");
+    // The profile data is the first element in the 'data' array.
+    return response.data.results.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+/**
+ * Creates a new Action for the leave request.
+ * This has been implemented as a POST request to follow RESTful best practices.
+ * @returns {Promise<object>} The response data from the server.
+ */
+export const leaveRequestAction = async (id, action) => {
+  try {
+    const response = await apiClient.post(`/hrms/leave/request/status/${id}/`, action);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating resignation request:', error);
     throw error;
   }
 };

@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { MessageList } from '../../../components'
 
 const Urchieved = () => {
   return (
-    <View>
-      <Text>Urchieved</Text>
-    </View>
+    <>
+    <MessageList />
+    </>
   )
 }
 

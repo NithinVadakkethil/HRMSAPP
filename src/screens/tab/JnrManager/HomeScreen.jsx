@@ -1,6 +1,5 @@
 import { View, ScrollView, ActivityIndicator, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { Lens, CalendarIcon } from '../../../assets'
 import {
   LeaveStats,
   UpcomingHolidays,
@@ -109,61 +108,6 @@ const HomeScreen = () => {
     if (newSelectedDate) setSelectedDate(newSelectedDate);
   };
 
-  // const SearchBar = () => {
-  //   const handleSearch = () => {
-  //     // No API call needed — filtering happens locally
-  //   };
-
-  //   return (
-  //     <View className="flex-1 flex-row items-center px-3 py-2 gap-3">
-  //       <View className='flex-row items-center justify-between w-48 rounded-lg shadow-sm border border-gray-200 px-2 py-0.5 gap-1'>
-  //         <Lens />
-  //         <TextInput
-  //           className="flex-1 text-gray-700 text-base m-0 p-0"
-  //           placeholder="Search"
-  //           placeholderTextColor="#9CA3AF"
-  //           value={searchText}
-  //           onChangeText={setSearchText}
-  //           onSubmitEditing={handleSearch}
-  //           returnKeyType="search"
-  //         />
-  //       </View>
-  //       <TouchableOpacity
-  //         className="bg-[#2A8E9E] px-4 py-2 rounded-md"
-  //         onPress={handleSearch}
-  //         activeOpacity={0.8}
-  //       >
-  //         <Text className="text-white font-medium text-sm">Search</Text>
-  //       </TouchableOpacity>
-  //       <TouchableOpacity 
-  //         className="gap-1 bg-[#FFFFFF] rounded-md p-2 flex-row items-center border border-[#374151]" 
-  //         onPress={() => setShowDatePicker(true)}
-  //       >
-  //         <CalendarIcon />
-  //         <Text className="text-[#374151] font-inter text-[12px]">
-  //           {selectedDate
-  //             ? selectedDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-  //             : 'Select Date'}
-  //         </Text>
-  //       </TouchableOpacity>
-  //       <TouchableOpacity
-  //         className="bg-[#002231] px-4 py-2 rounded-md"
-  //         activeOpacity={0.8}
-  //       >
-  //         <Text className="text-white font-medium text-sm">Export</Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // };
-
-  if (error) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text>{error}</Text>
-      </View>
-    );
-  }
-
   // 🔹 Filter employees locally by name
   const filteredAttendance = employeeAttendance?.filter(item =>
     item?.user?.employee_name?.toLowerCase()?.includes(searchText?.toLowerCase())
@@ -176,38 +120,41 @@ const HomeScreen = () => {
         showNotificationButton={true}
         showBackButton={true}
       />
-      <ScrollView
-        className="flex-1"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {loading ? (
-          <HomeScreenSkeleton />
-        ) : (
-          <>
-            <LeaveStats leaveStats={dashboardData} />
-            <Attendance
-              tableTitle={"Employee Attendance"}
-              attendanceData={filteredAttendance}
-              RightSection={() => (
-                <SearchBar
-                  searchText={searchText}
-                  setSearchText={setSearchText}
-                  onSearch={() => { }}
-                  selectedDate={selectedDate}
-                  onDatePress={() => setShowDatePicker(true)}
-                />
-              )}
-              scroll={true}
-            />
-            <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
-            <PerformanceDashboard />
-            <UpcomingAnniversary />
-            <UpcomingHolidays holidays={dashboardData?.public_holidays} />
-          </>
-        )}
-      </ScrollView>
-
+      {error ? <View className="flex-1 justify-center items-center">
+        <Text>{error}</Text>
+      </View> : <>
+        <ScrollView
+          className="flex-1"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
+          {loading ? (
+            <HomeScreenSkeleton />
+          ) : (
+            <>
+              <LeaveStats leaveStats={dashboardData} />
+              <Attendance
+                tableTitle={"Employee Attendance"}
+                attendanceData={filteredAttendance}
+                RightSection={() => (
+                  <SearchBar
+                    searchText={searchText}
+                    setSearchText={setSearchText}
+                    onSearch={() => { }}
+                    selectedDate={selectedDate}
+                    onDatePress={() => setShowDatePicker(true)}
+                  />
+                )}
+                scroll={true}
+              />
+              <Calendar onRequestLeave={() => setShowLeaveModal(true)} />
+              <PerformanceDashboard />
+              <UpcomingAnniversary />
+              <UpcomingHolidays holidays={dashboardData?.public_holidays} />
+            </>
+          )}
+        </ScrollView>
+      </>}
       <LeaveRequestModal
         visible={showLeaveModal}
         onClose={() => setShowLeaveModal(false)}

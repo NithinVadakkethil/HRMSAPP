@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 
 const CustomTable = ({
-    title = "Table",
+    title = "",
     columns,
     data,
     containerStyle = "",
